@@ -1,0 +1,62 @@
+table, tr, td, th {
+	border: 1px solid #000047;
+	border-collapse: collapse;
+	padding: 2px;
+	margin: 0px;
+}
+
+td {
+	width: 100px;
+}
+
+.fret {
+	width: 100px;
+}
+
+.fret-header {
+	width: 100px;
+}
+
+.scale {
+	background: #FF5555;
+}
+
+.scale-root {
+	background: #FF0000;
+}
+
+.non-scale-hide {
+	color: transparent;
+}
+
+.chord-note {
+	background: #008800;
+}
+
+.chord-root {
+	background: #00FF00;
+}
+
+.chord-third {
+	background: #00AA00;
+}
+
+.chord-fifth {
+	background: #006600;
+}
+
+.scale-chord {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background: #222222;
+	color: #DDDDDD;
+	font-weight: bold;
+	border: 1px solid #000047;
+}
+
+.scale-chord:hover {
+	background: #444444;
+	color: #FFFFFF;
+}

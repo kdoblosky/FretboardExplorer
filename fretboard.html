@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="fretboard.js"></script>
+        <link rel="stylesheet" href="fretboard.css">
+  
+        <title>Fretboard Test</title>
+    </head>
+
+    <body>
+        <h1>Fretboard Explorer</h1>
+		
+		<label for="tuning-select">Tuning:</label>
+		<select name="tuning" id="tuning-select" onchange="FretboardController.SetTuningFromForm();">
+		</select>
+		
+		<label for="scale-select">Scale:</label>
+		<select name="scale" id="scale-select" onchange="FretboardController.SetScaleFromForm();">
+		</select>
+		
+		<label for="scale-type-select">Scale Type:</label>
+		<select name="scaletype" id="scale-type-select" onchange="FretboardController.SetScaleFromForm();">
+		</select>
+		
+		<input type="checkbox" id="hide-non-scale-notes" name="HideNonScaleNotes" value="true" onchange="FretboardController.SetHideNonScaleNotes();">
+		<label for="hide-non-scale-notes">Hide non-scale notes</label>
+		<p></p>
+		<input type='button' onclick='FretHTMLManager.RemoveAllHighlights()' value='Remove All Highlights'>
+		<input type='button' onclick='FretHTMLManager.RemoveAllHighlightingClasses()' value='Remove Scale Highlights'>
+		<input type='button' onclick='FretHTMLManager.RemoveChordHighlights()' value='Remove Chord Highlights'>
+		
+		<div id='fretboard-table'></div>
+		<p>
+		<div id='scale-chord-list-container'>
+		<p class='subhead2'>Chords in scale:</p>
+		<div id='scale-chord-list'></div>
+		</div>
+    </body>
+</html>
