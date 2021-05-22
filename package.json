@@ -1,0 +1,30 @@
+{
+  "name": "fretboardexplorer",
+  "version": "1.0.0",
+  "description": "Fretboard Explorer",
+  "main": "main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "jest": "^26.6.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kdoblosky/FretboardExplorer.git"
+  },
+  "author": "Kevin Doblosky",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/kdoblosky/FretboardExplorer/issues"
+  },
+  "homepage": "https://github.com/kdoblosky/FretboardExplorer#readme"
+}
