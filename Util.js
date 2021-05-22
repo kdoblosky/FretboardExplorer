@@ -29,16 +29,7 @@ export function GetArrayOffset(arr, item, offset){
 	var newIndex = this.GetIndexOffset(arr.length, index, offset);
 	return arr[newIndex];
 };
-export function PopulateDropdown(dropdownID, source, valueProperty, textProperty) {
-	var element = document.getElementById(dropdownID);
-	
-	source.forEach(n => {
-		var opt = document.createElement("option");
-		opt.value = valueProperty == null ? n : n[valueProperty];
-		opt.text = textProperty == null ? n : n[textProperty];
-		element.add(opt, null);
-	});
-};
+
 export var FretMarkerClasses = {
 	fret: 'fret',
 	open: 'open',

@@ -28,14 +28,14 @@ export function Scale(root, scaleType) {
 		this.ScaleRootNote = scaleNote;
 
 		this.DisplayName = function(){
-			var number = (this.Chord.ChordType === MusicDefs.ChordTypes.Minor || this.Chord.ChordType === MusicDefs.ChordTypes.Diminished) ? this.NashvilleNumber.Minor : this.NashvilleNumber.Major;
+			var number = (['Minor', 'Diminished'].includes(this.Chord.ChordType.Name)) ? this.NashvilleNumber.Minor : this.NashvilleNumber.Major;
 			return number + ' - ' + this.Chord.Display
 		}
 
 		this.Display = this.DisplayName();
 
 		this.GetID = function(){
-			return (this.Chord.Root.HTMLClass + '-' + this.Chord.ChordType.Name).toLocaleLowerCase().replace(/ /g, '-');
+			return (this.Chord.Root.Name + '-' + this.Chord.ChordType.Name).toLocaleLowerCase().replace(/ /g, '-');
 		}
 
 		this.ID = this.GetID();

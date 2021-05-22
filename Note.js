@@ -1,6 +1,7 @@
 import * as Util from './Util.js';
 import * as MusicDefs from './MusicDefs.js';
 
+/** @module myModule */
 export function Note (name){
 	//console.log('name: ' + name)
 	this.Name = name;
@@ -9,9 +10,9 @@ export function Note (name){
 
     var that = this;
 
-    var getLetterOffset = function(offset) {
-        return Util.GetArrayOffset(MusicDefs.NoteLetters, that.Name, offset);
-    }
+    // var getLetterOffset = function(offset) {
+    //     return Util.GetArrayOffset(MusicDefs.NoteLetters, that.Name, offset);
+    // }
 
     var getNoteOffset = function(offset) {
         return Util.GetArrayOffset(MusicDefs.AllNotes, that.Name, offset);
@@ -38,7 +39,7 @@ export function Note (name){
     this.AltName = GetAltName();
 
     this.NextNote = function(){
-		if(this.name === 'None') {
+		if(that.Name === 'None') {
 			return new Note('None');
 		} else {
         	var offset = getNoteOffset(1);
@@ -47,7 +48,7 @@ export function Note (name){
     };
 
     this.PrevNote = function(){
-		if(this.name === 'None') {
+		if(that.Name === 'None') {
 			return new Note('None');
 		} else {
         	var offset = getNoteOffset(-1);
@@ -69,13 +70,6 @@ export function Note (name){
 	
 	this.DisplayName = GetDisplayName();
 
-    var GetHTMLClass = function(){
-        var classname = that.DisplayName;
-        return classname.replace('#', 'Sharp').replace(' / ', '-');
-    }
-	
-
-
 	this.GetInterval = function(note){
 		var interval;
 		var rootIndex = MusicDefs.AllNotes.indexOf(this.Name);
@@ -87,12 +81,9 @@ export function Note (name){
 		
 		var distance = noteIndex - rootIndex;
 		
-		//interval = Util.IterateObject(MusicDefs.Intervals).find(i => i == distance);
 		interval = Object.values(MusicDefs.Intervals).find(i => i == distance);
 		
 		return interval;
 	}
 	
-	this.HTMLClass = GetHTMLClass();
-	//console.log('this.Name: ' + this.Name);
 };

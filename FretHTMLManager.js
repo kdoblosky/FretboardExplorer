@@ -8,7 +8,21 @@ export var FretHTMLManager = {
 	_tuningSelectID: 'tuning-select',
 	_scaleSelectID: 'scale-select',
 	_scaleTypeSelectID: 'scale-type-select',
+	GetNoteHTMLClass: function(note){
+		var classname = note.DisplayName;
+		return classname.replace('#', 'Sharp').replace(' / ', '-');
+	},
 	HTMLUtils: {
+		PopulateDropdown: function(dropdownID, source, valueProperty, textProperty) {
+			var element = document.getElementById(dropdownID);
+			
+			source.forEach(n => {
+				var opt = document.createElement("option");
+				opt.value = valueProperty == null ? n : n[valueProperty];
+				opt.text = textProperty == null ? n : n[textProperty];
+				element.add(opt, null);
+			});
+		},
 		GetFrets: function() {
 			return document.getElementsByClassName('fret');
 		},
@@ -59,7 +73,7 @@ export var FretHTMLManager = {
 			fretboardHTMLTable += "<tr class='string' id='" + fs.id + "'><td class='string-root'>" + fs.RootNote + "</td>";
 			
 			fs.Frets.forEach(fret => {
-				fretboardHTMLTable += "<td class='fret " + fret.Note.HTMLClass + "' id='" + fret.id + "'>" + fret.Note.DisplayName + "</td>";
+				fretboardHTMLTable += "<td class='fret " + this.GetNoteHTMLClass(fret.Note) + "' id='" + fret.id + "'>" + fret.Note.DisplayName + "</td>";
 			});
 			fretboardHTMLTable += "</tr>";
 		} );
@@ -80,14 +94,14 @@ export var FretHTMLManager = {
 	},
 	PopulateTunings: function() {
 		var tunings = Object.keys(MusicDefs.Tunings).map(t => MusicDefs.Tunings[t]);
-		Util.PopulateDropdown(this._tuningSelectID, tunings, 'Key', 'Name')
+		this.HTMLUtils.PopulateDropdown(this._tuningSelectID, tunings, 'Key', 'Name')
 	}, 
 	PopulateScales: function() {
-		Util.PopulateDropdown(this._scaleSelectID, MusicDefs.AllNotes);
+		this.HTMLUtils.PopulateDropdown(this._scaleSelectID, MusicDefs.AllNotes);
 	},
 	PopulateScaleTypes: function() {
 		var scaleTypes = Object.keys(MusicDefs.ScaleTypes).map(t => MusicDefs.ScaleTypes[t]);
-		Util.PopulateDropdown(this._scaleTypeSelectID, scaleTypes, 'Key', 'Name');
+		this.HTMLUtils.PopulateDropdown(this._scaleTypeSelectID, scaleTypes, 'Key', 'Name');
 	},
 	Init: function(){
 		this.PopulateTunings();
