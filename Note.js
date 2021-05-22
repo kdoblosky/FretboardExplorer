@@ -2,7 +2,7 @@ import * as Util from './Util.js';
 import * as MusicDefs from './MusicDefs.js';
 
 export function Note (name){
-	console.log('name: ' + name)
+	//console.log('name: ' + name)
 	this.Name = name;
 	
     this.Index = MusicDefs.AllNotes.indexOf(name);
@@ -98,5 +98,5 @@ export function Note (name){
 	}
 	
 	this.HTMLClass = GetHTMLClass();
-	console.log('this.Name: ' + this.Name);
+	//console.log('this.Name: ' + this.Name);
 };

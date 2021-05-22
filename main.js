@@ -14,4 +14,5 @@ window.onload = function() {
 	FretboardController.SetTuningFromForm();
 	FretboardController.SetScaleFromForm();
 	window.FretboardController = FretboardController;
+	window.FretHTMLManager = FretHTMLManager;
 };

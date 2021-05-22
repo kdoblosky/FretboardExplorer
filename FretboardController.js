@@ -32,13 +32,13 @@ export var FretboardController = {
 		this.SetTuningByName(tuningName);
 	},
 	SetTuningByName: function(tuningName) {
-		this.SetTuning(MusicDefs.Tunings[tuningName]);
+		this.SetTuning(MusicDefs.Tunings.find(f => f.Key === tuningName));
 	},
 	SetScaleFromForm: function() {
 		var scaleName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._scaleSelectID);
 		var scaleTypeName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._scaleTypeSelectID);
 		
-        var scaleType = MusicDefs.ScaleTypes[scaleTypeName];
+        var scaleType = MusicDefs.ScaleTypes.find(s => s.Key === scaleTypeName);
 		var scale = new Scale(scaleName, scaleType);
 		this.SetScale(scale);
 	},
@@ -69,7 +69,7 @@ export var FretboardController = {
 
 		FretHTMLManager.RemoveChordHighlights();
 		var chord = this.fretboard.Scale.ScaleChords.find(sc => sc.ID === id);
-		console.log(chord);
+		//console.log(chord);
 		var chordNoteNames = chord.Chord.Notes.map(n => n.Name);
 		var chordNoteFrets = this.fretboard.GetAllFrets().filter(f => chordNoteNames.includes(f.Note.Name));
 		//FretHTMLManager.AddHighlightingClassToIDs(chordNoteFrets.map(f => f.id), Util.ChordHighlightClasses.chordNote);

@@ -60,10 +60,10 @@ export var Fretboard = {
 		for(var i=0; i<this.Tuning.Strings.length; i++){
 			//Strings: [{Note: 'G'; Start: 5}, 'D', 'G', 'B', 'D']
 			if(this.Tuning.Strings[i].hasOwnProperty('Note') && this.Tuning.Strings[i].hasOwnProperty('Start')) {
-				console.log('beep');
+				//console.log('beep');
 				this.FretboardMap.push(new FretboardString(this.Tuning.Strings[i].Note, this.FretsPerString, i, this.Tuning.Strings[i].Start));
 			} else {
-				console.log('boop');
+				//console.log('boop');
 				this.FretboardMap.push(new FretboardString(this.Tuning.Strings[i], this.FretsPerString, i));
 			}
 		};

@@ -5,7 +5,7 @@ import {Fret} from './Fret.js';
 
 export function FretboardString(rootNote, numFrets, stringNumber, startNumber){
 	if (startNumber === undefined) {
-		console.log('yep');
+		//console.log('yep');
 		var startNumber = 0;
 	};
 	this.RootNote = rootNote;
@@ -32,7 +32,7 @@ export function FretboardString(rootNote, numFrets, stringNumber, startNumber){
 			next = n.NextNote() ;
 			this.Frets.push(new Fret(next, stringNumber, i));
 		};
-		console.log(this.Frets);
+		//console.log(this.Frets);
 		n = next;
 	};
 };
