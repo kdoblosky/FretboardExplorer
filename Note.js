@@ -87,12 +87,8 @@ export function Note (name){
 		
 		var distance = noteIndex - rootIndex;
 		
-		interval = Util.IterateObject(MusicDefs.Intervals).find(i => i == distance);
-		// Object.keys(MusicDefs.Intervals).forEach(i => {
-		// 	if (MusicDefs.Intervals[i] === distance) {
-		// 		interval = MusicDefs.Intervals[i];
-		// 	}
-		// });
+		//interval = Util.IterateObject(MusicDefs.Intervals).find(i => i == distance);
+		interval = Object.values(MusicDefs.Intervals).find(i => i == distance);
 		
 		return interval;
 	}

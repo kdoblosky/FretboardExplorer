@@ -67,7 +67,7 @@ export function Scale(root, scaleType) {
 		this.ChordIntervals = JSON.stringify(intervals);
 		var chordType = null;
 		
-		chordType = Util.IterateObject(MusicDefs.ChordTypes).find(ct => ct.NumberOfNotes === 3 &&
+		chordType = Object.values(MusicDefs.ChordTypes).find(ct => ct.NumberOfNotes === 3 &&
 				JSON.stringify(ct.Intervals) === this.ChordIntervals);
 
 		if (chordType !== null && chordType !== undefined) {

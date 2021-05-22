@@ -31,12 +31,10 @@ export var FretHTMLManager = {
 		}
     },
     RemoveAllHighlightingClasses: function() {
-		Util.IterateObject(Util.HighlightClasses).forEach(c => this.HTMLUtils.RemoveHTMLClassFromFrets(c));
-		//Object.keys(Util.HighlightClasses).forEach(c => this.HTMLUtils.RemoveHTMLClassFromFrets(c));
-		//this.HighlightingClasses.forEach(c => this.HTMLUtils.RemoveHTMLClassFromFrets(c));
+		Object.values(Util.HighlightClasses).forEach(c => this.HTMLUtils.RemoveHTMLClassFromFrets(c));
 	},
 	RemoveChordHighlights: function() {
-		Util.IterateObject(Util.ChordHighlightClasses).forEach(c => this.HTMLUtils.RemoveHTMLClassFromFrets(c));
+		Object.values(Util.ChordHighlightClasses).forEach(c => this.HTMLUtils.RemoveHTMLClassFromFrets(c));
 	},
 	RemoveAllHighlights:function() {
 		this.RemoveAllHighlightingClasses();
