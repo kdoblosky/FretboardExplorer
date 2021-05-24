@@ -5,8 +5,8 @@ import * as Chord from './Chord.js';
 import * as Scale from './Scale.js';
 import * as Fret from './Fret.js';
 import {FretboardString} from './FretboardString.js';
-import {FretHTMLManager} from './FretHTMLManager.js';
-import {FretboardController} from './FretboardController.js';
+// import {FretHTMLManager} from './FretHTMLManager.js';
+//import {FretboardController} from './FretboardController.js';
 
 export var Fretboard = {
 	FretboardMap: new Array(),

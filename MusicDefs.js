@@ -121,6 +121,10 @@ export const ScaleTypes = [
 				Intervals: [Intervals.HalfStep, Intervals.WholeStep, Intervals.WholeStep, Intervals.HalfStep, Intervals.WholeStep, Intervals.WholeStep]
 			}
 ];
+
+export function GetScaleType(name) {
+	return ScaleTypes.find(f => f.Name === name);
+}
 		
 export var ChordTypes = [
 			{
@@ -161,4 +165,6 @@ export var ChordTypes = [
 			}
 ];
 			
-	
+export function GetChordType(name) {
+	return ChordTypes.find(f => f.Name === name);
+}

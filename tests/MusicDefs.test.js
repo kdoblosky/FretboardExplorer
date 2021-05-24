@@ -43,6 +43,39 @@ describe('Testing ScaleTypes', () => {
     });
 });
 
+describe('Testing GetChordType', () => {
+    test('Test GetChordType Major', () => {
+        var sc = MusicDefs.GetChordType('Major');
+        expect(sc.Name).toBe('Major');
+    });
+
+    test('Test GetChordType Minor', () => {
+        var sc = MusicDefs.GetChordType('Minor');
+        expect(sc.Name).toBe('Minor');
+    });
+
+    test('Test GetChordType Diminished', () => {
+        var sc = MusicDefs.GetChordType('Diminished');
+        expect(sc.Name).toBe('Diminished');
+    });
+
+    test('Test GetChordType Seventh', () => {
+        var sc = MusicDefs.GetChordType('Seventh');
+        expect(sc.Name).toBe('Seventh');
+    });
+
+    test('Test GetChordType MinorSeventh', () => {
+        var sc = MusicDefs.GetChordType('MinorSeventh');
+        expect(sc.Name).toBe('MinorSeventh');
+    });
+
+    test('Test GetChordType MajorSeventh', () => {
+        var sc = MusicDefs.GetChordType('MajorSeventh');
+        expect(sc.Name).toBe('MajorSeventh');
+    });
+
+});
+
 describe('Testing ChordTypes', () => {
     test('ChordTypes contains Minor', () => {
         expect(MusicDefs.ChordTypes.find(f => f.Name === 'Minor').Name).toBe('Minor');

@@ -2,6 +2,7 @@ import * as Util from './Util.js';
 import * as MusicDefs from './MusicDefs.js';
 import {Note} from './Note.js';
 
+/** @module FretboardExplorer/Chord */
 export function Chord (rootNote, chordType){
 	this.Name = rootNote.Name + chordType.Name;
 	this.Root = rootNote;

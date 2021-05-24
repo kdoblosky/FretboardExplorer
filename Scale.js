@@ -10,6 +10,7 @@ export function Scale(root, scaleType) {
 	this.Root = root;
 	this.ScaleNotes = new Array();
 	this.ScaleChords = new Array();
+	this.Name = root + ' ' + scaleType.Name;
 	
 	function ScaleNote(note, scaleType, scaleLetters){
 		this.Note = new Note(note);
@@ -54,12 +55,6 @@ export function Scale(root, scaleType) {
 		this.ScaleNotes.push(new ScaleNote(letter, scaleType, this.NoteLetters));
 	});
 	
-	var getScaleNoteClasses = function() {
-		return that.ScaleNotes.map(n => n.Note.HTMLClass);
-	};
-	
-	this.ScaleNoteClasses = getScaleNoteClasses();
-	
 	this.ScaleNotes.forEach(sn => {
 		var intervals = [];
 		intervals.push(sn.Note.GetInterval(new Note(sn.Third)));
@@ -67,7 +62,7 @@ export function Scale(root, scaleType) {
 		this.ChordIntervals = JSON.stringify(intervals);
 		var chordType = null;
 		
-		chordType = Object.values(MusicDefs.ChordTypes).find(ct => ct.NumberOfNotes === 3 &&
+		chordType = MusicDefs.ChordTypes.find(ct => ct.NumberOfNotes === 3 &&
 				JSON.stringify(ct.Intervals) === this.ChordIntervals);
 
 		if (chordType !== null && chordType !== undefined) {

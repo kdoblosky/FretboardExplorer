@@ -40,6 +40,11 @@ describe('Testing Note', () => {
         expect(note.GetInterval(a)).toStrictEqual(MusicDefs.Intervals.PerfectFifth);
     });
 
+    test('Testing Note.GetInterval Again', () => {
+        var a = new Note('A');
+        expect(a.GetInterval(note)).toBe(MusicDefs.Intervals.PerfectFourth);
+    });
+
     var none = new Note('None');
 
     test('Testing Note constructor with None', () => {

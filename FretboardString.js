@@ -1,5 +1,5 @@
-import * as Util from './Util.js';
-import * as MusicDefs from './MusicDefs.js';
+//import * as Util from './Util.js';
+//import * as MusicDefs from './MusicDefs.js';
 import {Note} from './Note.js';
 import {Fret} from './Fret.js';
 

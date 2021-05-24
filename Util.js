@@ -1,3 +1,4 @@
+/** @module FretboardExplorer/Util */
 /**
  * Returns the index of an array based on an offset. Assumes 0-based index for array. 
  * Wraps around, so for example length 3, index 2, offset 2 would return 1.

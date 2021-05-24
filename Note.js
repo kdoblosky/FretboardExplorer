@@ -1,18 +1,17 @@
 import * as Util from './Util.js';
 import * as MusicDefs from './MusicDefs.js';
 
-/** @module myModule */
+/** @module FretboardExplorer/Note */
 export function Note (name){
 	//console.log('name: ' + name)
+	var that = this;
+	
+	/**
+	 @property {Name}	{Name} - Name of the note
+	*/
 	this.Name = name;
 	
     this.Index = MusicDefs.AllNotes.indexOf(name);
-
-    var that = this;
-
-    // var getLetterOffset = function(offset) {
-    //     return Util.GetArrayOffset(MusicDefs.NoteLetters, that.Name, offset);
-    // }
 
     var getNoteOffset = function(offset) {
         return Util.GetArrayOffset(MusicDefs.AllNotes, that.Name, offset);

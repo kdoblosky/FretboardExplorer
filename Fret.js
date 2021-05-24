@@ -1,5 +1,6 @@
 import * as Util from './Util.js';
 import * as MusicDefs from './MusicDefs.js';
+import {FretAttribute} from './FretAttribute';
 
 export function Fret(note, stringNumber, fretNumber){
 	//console.log(note);
@@ -13,5 +14,12 @@ export function Fret(note, stringNumber, fretNumber){
 	this.ScaleRootNote = false;
 	this.ChordNote = false;
 	this.Classes = null;
+
+	this.FretAttributes = new Array();
+
+	this.HasFretAttribute = function (fretAttribute){
+		return this.FretAttributes.includes(fretAttribute);
+	}
+
 	this.id = 'string-' + stringNumber + '-fret-' + fretNumber;
 };
