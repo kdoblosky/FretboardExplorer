@@ -12,6 +12,7 @@ export function FretboardString(rootNote, numFrets, stringNumber, startNumber){
 	var root = new Note(rootNote);
 	this.StringNumber = stringNumber;
 	this.id = 'string-' + stringNumber;
+	this.StartFret = startNumber;
 
 	this.Frets = new Array();
 	this.Frets.push(new Fret(root, stringNumber, 0));

@@ -1,6 +1,6 @@
 import * as Util from './Util.js';
 import * as MusicDefs from './MusicDefs.js';
-import {FretAttribute} from './FretAttribute';
+import {FretAttribute} from './FretAttribute.js';
 
 export function Fret(note, stringNumber, fretNumber){
 	//console.log(note);
