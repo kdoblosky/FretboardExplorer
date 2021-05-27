@@ -42,7 +42,11 @@ td {
 }
 
 .chord-fifth {
-	background: #006600;
+	background: #007700;
+}
+
+.chord-seventh {
+	background: #005500;
 }
 
 .scale-chord {

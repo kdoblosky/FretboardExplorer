@@ -6,16 +6,28 @@ import {Scale} from './Scale.js';
 import {Fret} from './Fret.js';
 import {FretboardString} from './FretboardString.js';
 import {FretHTMLManager} from './FretHTMLManager.js';
-import {Fretboard} from './fretboard.js';
+import {Fretboard} from './Fretboard.js';
 
 export var FretboardController = {
 	fretboard: Fretboard,
 	HTMLManager: FretHTMLManager,
 	
-	HideNonScaleNotes: false,
+	ShowNonScaleNotes: false,
+	HighlightScaleNotes: true,
+	HighlightChordNotes: true,
+
+	SetHighlightScaleNotes: function(){
+		this.HighlightScaleNotes = FretHTMLManager.HTMLUtils.GetHighlightScaleNotesValue();
+		this.ReDraw();
+	},
+
+	SetHighlightChordNotes: function(){
+		this.HighlightChordNotes = FretHTMLManager.HTMLUtils.GetHighlightChordNotesValue();
+		this.ReDraw();
+	},
 	
-	SetHideNonScaleNotes: function(){
-		this.HideNonScaleNotes = FretHTMLManager.HTMLUtils.GetHideNonScaleNotesValue();
+	SetShowNonScaleNotes: function(){
+		this.ShowNonScaleNotes = FretHTMLManager.HTMLUtils.GetShowNonScaleNotesValue();
 		this.ReDraw();
 	},
 	
@@ -47,13 +59,13 @@ export var FretboardController = {
 		this.ReDraw();
 	},
 	SetHighlights: function(){
-		if(this.fretboard.Scale !== null){
+		if(this.fretboard.Scale !== null && this.HighlightScaleNotes){
 			var scaleFretIDs = this.fretboard.GetScaleFrets().map(f => f.id);
 			FretHTMLManager.AddHighlightingClassToIDs(scaleFretIDs, Util.HighlightClasses.scale);
 			
 			var nonScaleFretIDs = this.fretboard.GetNonScaleFrets().map(f => f.id);
 			FretHTMLManager.AddHighlightingClassToIDs(nonScaleFretIDs, Util.HighlightClasses.nonScale);
-			if (this.HideNonScaleNotes) {
+			if (!this.ShowNonScaleNotes) {
 				FretHTMLManager.AddHighlightingClassToIDs(nonScaleFretIDs, Util.HighlightClasses.nonScaleHide);
 			}
 
@@ -62,21 +74,29 @@ export var FretboardController = {
 		}
 	},
 	HighlightChord: function(id){
-		function _AddChordHight(chordNoteFrets, chord, position, chordClass){
+		function _AddChordHighlight(chordNoteFrets, chord, position, chordClass){
 			var ids = chordNoteFrets.filter(f => f.Note.Name === chord.Chord.Notes[position].Name).map(f => f.id);
 			FretHTMLManager.AddHighlightingClassToIDs(ids, chordClass);
 		};
 
 		FretHTMLManager.RemoveChordHighlights();
-		var chord = this.fretboard.Scale.ScaleChords.find(sc => sc.ID === id);
-		//console.log(chord);
-		var chordNoteNames = chord.Chord.Notes.map(n => n.Name);
-		var chordNoteFrets = this.fretboard.GetAllFrets().filter(f => chordNoteNames.includes(f.Note.Name));
-		//FretHTMLManager.AddHighlightingClassToIDs(chordNoteFrets.map(f => f.id), Util.ChordHighlightClasses.chordNote);
+		if(this.HighlightChordNotes) {
+			var chord = this.fretboard.Scale.ScaleChords.find(sc => sc.ID === id);
+			if (!chord) {
+				chord = this.fretboard.Scale.ScaleSeventhChords.find(sc => sc.ID === id);
+			}
+			//console.log(chord);
+			var chordNoteNames = chord.Chord.Notes.map(n => n.Name);
+			var chordNoteFrets = this.fretboard.GetAllFrets().filter(f => chordNoteNames.includes(f.Note.Name));
+			//FretHTMLManager.AddHighlightingClassToIDs(chordNoteFrets.map(f => f.id), Util.ChordHighlightClasses.chordNote);
 
-		_AddChordHight(chordNoteFrets, chord, 0, Util.ChordHighlightClasses.chordRoot);
-		_AddChordHight(chordNoteFrets, chord, 1, Util.ChordHighlightClasses.chordThird);
-		_AddChordHight(chordNoteFrets, chord, 2, Util.ChordHighlightClasses.chordFifth);
+			_AddChordHighlight(chordNoteFrets, chord, 0, Util.ChordHighlightClasses.chordRoot);
+			_AddChordHighlight(chordNoteFrets, chord, 1, Util.ChordHighlightClasses.chordThird);
+			_AddChordHighlight(chordNoteFrets, chord, 2, Util.ChordHighlightClasses.chordFifth);
+			if (chord.Chord.Notes.length ===4) {
+				_AddChordHighlight(chordNoteFrets, chord, 3, Util.ChordHighlightClasses.chordSeventh);
+			}
+		};
 	},
 	ReDraw: function(){
 		FretHTMLManager.RemoveChordHighlights();

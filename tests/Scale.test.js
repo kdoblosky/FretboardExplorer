@@ -24,6 +24,10 @@ describe('Testing Scale', () => {
         expect(sc.ScaleChords.length).toBe(7);
     });
 
+    test('Test Scale.ScaleSeventhChords contains correct number of elements', () => {
+        expect(sc.ScaleSeventhChords.length).toBe(7);
+    });
+
     test('Test Scale.ScaleChords 6th element is correct', () => {
         expect(sc.ScaleChords[5].Display).toBe('vi - Amin');
     });

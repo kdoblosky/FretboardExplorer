@@ -70,6 +70,11 @@ export var Tunings = [
 			Strings: [{Note: 'G', Start: 6}, 'D', 'G', 'Bb', 'D']
 		}
 ];
+
+export function GetTuning(name) {
+	return Tunings.find(f => f.Key === name);
+};
+
 export var NashvilleNumbers = [
 		{Position: 1, Major: "I", Minor: 'i'},
 		{Position: 2, Major: "II", Minor: 'ii'},
@@ -162,7 +167,14 @@ export var ChordTypes = [
 				NumberOfNotes: 4,
 				Display: 'Maj7',
 				Intervals: [Intervals.MajorThird, Intervals.PerfectFifth, Intervals.MajorSeventh]
+			},
+			{
+				Name: 'HalfDiminishedSeventh',
+				NumberOfNotes: 4,
+				Display: 'Half-Dim7',
+				Intervals: [Intervals.MinorThird, Intervals.DiminishedFifth, Intervals.MinorSeventh]
 			}
+
 ];
 			
 export function GetChordType(name) {

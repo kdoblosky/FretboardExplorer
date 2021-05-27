@@ -43,7 +43,8 @@ export var ChordHighlightClasses = {
 	chordNote: 'chord-note',
 	chordRoot: 'chord-root',
 	chordThird: 'chord-third',
-	chordFifth: 'chord-fifth'
+	chordFifth: 'chord-fifth',
+	chordSeventh: 'chord-seventh'
 };
 export var HighlightClasses = {
 	scale: 'scale',

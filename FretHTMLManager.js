@@ -1,6 +1,6 @@
 import * as Util from './Util.js';
 import * as MusicDefs from './MusicDefs.js';
-import {Fretboard} from './fretboard.js';
+import {Fretboard} from './Fretboard.js';
 
 export var FretHTMLManager = {
 	FretboardTable: document.getElementById('fretboard-table'),
@@ -40,8 +40,14 @@ export var FretHTMLManager = {
 			var element = document.getElementById(id);
 			return element.options[element.selectedIndex].value;
 		},
-		GetHideNonScaleNotesValue: function() {
-			return document.getElementById('hide-non-scale-notes').checked;
+		GetShowNonScaleNotesValue: function() {
+			return document.getElementById('show-non-scale-notes').checked;
+		},
+		GetHighlightScaleNotesValue: function() {
+			return document.getElementById('highlight-scale-notes').checked;
+		},
+		GetHighlightChordNotesValue: function() {
+			return document.getElementById('highlight-chord-notes').checked;
 		}
     },
     RemoveAllHighlightingClasses: function() {
@@ -91,6 +97,13 @@ export var FretHTMLManager = {
 		});
 		chordlistHTML += "</div>"
 		document.getElementById('scale-chord-list').innerHTML = chordlistHTML;
+
+		var seventhChordListHTML = "<div id='seventh-scale-chords'>"
+		Fretboard.Scale.ScaleSeventhChords.forEach(sc => {
+			seventhChordListHTML += "<span class='scale-chord ' id='" + sc.ID + "' onclick='FretboardController.HighlightChord(this.id)'>" + sc.Display + "</span>";
+		});
+		seventhChordListHTML += "</div>"
+		document.getElementById('seventh-scale-chord-list').innerHTML = seventhChordListHTML;
 	},
 	PopulateTunings: function() {
 		var tunings = Object.keys(MusicDefs.Tunings).map(t => MusicDefs.Tunings[t]);

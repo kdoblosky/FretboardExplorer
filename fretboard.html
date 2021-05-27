@@ -1,17 +1,6 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <!-- <script src="Util.js"></script> -->
-		<!--<script src="MusicDefs.js"></script> -->
-		<!-- <script src="Note.js"></script>  -->
-		<!-- <script src="Chord.js"></script> 
-		<script src="Scale.js"></script>
-		<script src="Fret.js"></script>
-		<script src="FretboardString.js"></script>
-		
-		<script src="FretHTMLManager.js"></script>
-		<script src="fretboard.js"></script>
-		<script src="FretboardController.js"></script> -->
 		<script type=module src="main.js"></script>
         <link rel="stylesheet" href="fretboard.css">
   
@@ -33,18 +22,32 @@
 		<select name="scaletype" id="scale-type-select" onchange="FretboardController.SetScaleFromForm();">
 		</select>
 		
-		<input type="checkbox" id="hide-non-scale-notes" name="HideNonScaleNotes" value="true" onchange="FretboardController.SetHideNonScaleNotes();">
-		<label for="hide-non-scale-notes">Hide non-scale notes</label>
-		<p></p>
+		<p>
+		<input type="checkbox" id="show-non-scale-notes" name="ShowNonScaleNotes" value="false" onchange="FretboardController.SetShowNonScaleNotes();">
+		<label for="show-non-scale-notes">Show non-scale notes</label>
+
+		<input type="checkbox" id="highlight-scale-notes" name="HighlightScaleNotes" value="true" onchange="FretboardController.SetHighlightScaleNotes();" checked> 
+		<label for="hightlight-scale-notes">Highlight scale notes</label>
+
+		<input type="checkbox" id="highlight-chord-notes" name="HighlightChordNotes" value="true" onchange="FretboardController.SetHighlightChordNotes();" checked> 
+		<label for="hightlight-chord-notes">Highlight chord notes</label>
+		</p>
+		<!-- <p></p>
 		<input type='button' onclick='FretHTMLManager.RemoveAllHighlights()' value='Remove All Highlights'>
 		<input type='button' onclick='FretHTMLManager.RemoveAllHighlightingClasses()' value='Remove Scale Highlights'>
 		<input type='button' onclick='FretHTMLManager.RemoveChordHighlights()' value='Remove Chord Highlights'>
-		
+		 -->
 		<div id='fretboard-table'></div>
 		<p>
 		<div id='scale-chord-list-container'>
-		<p class='subhead2'>Chords in scale:</p>
+		<p class='subhead2'>Triads in scale:</p>
 		<div id='scale-chord-list'></div>
+		</div>
+
+		<p>
+		<div id='seventh-chord-list-container'>
+		<p class='subhead2'>7th chords in scale:</p>
+		<div id='seventh-scale-chord-list'></div>
 		</div>
     </body>
 </html>
