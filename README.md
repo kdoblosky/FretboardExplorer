@@ -13,9 +13,10 @@ There are plenty of tools online that do similar things, but almost all of them 
 
 ## Design considerations
 * Written in HTML / CSS / Javascript. For now, there is no backend; everything runs in the browser.
-* No external dependencies. This is written in pure HTML / Javascript / CSS. I did wind up using [Jest](https://jestjs.io/) for unit testing, but the user-facing code has absolutely no dependencies. There are a few reasons for this:
+* No frameworks, nor external dependencies. This is written in pure HTML / Javascript / CSS. I did wind up using [Jest](https://jestjs.io/) for unit testing, but the user-facing code has absolutely no dependencies. There are a few reasons for this:
     * The challenge of it.
     * I wanted to understand all the code involved.
+    * Loading speed - no need for users to download anything other than this code.
     * Avoid issues like [left-pad](https://qz.com/646467/how-one-programmer-broke-the-internet-by-deleting-a-tiny-piece-of-code/).
 * Open source. This project is licensed under a GPLv3 license.
 * Store no cookies, unless explicitly requested.
