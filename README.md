@@ -24,6 +24,7 @@ There are plenty of tools online that do similar things, but almost all of them 
 
 ## Future plans
 * Improve CSS / HTML to make it look better.
+* Addd responsive CSS to make it more usable on mobile.
 * Add additional stock tunings.
 * Add ability to define custom tuning.
 * Add additional chord types.

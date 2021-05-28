@@ -59,19 +59,22 @@ export var FretboardController = {
 		this.ReDraw();
 	},
 	SetHighlights: function(){
+		var nonScaleFretIDs = this.fretboard.GetNonScaleFrets().map(f => f.id);
+		
 		if(this.fretboard.Scale !== null && this.HighlightScaleNotes){
 			var scaleFretIDs = this.fretboard.GetScaleFrets().map(f => f.id);
 			FretHTMLManager.AddHighlightingClassToIDs(scaleFretIDs, Util.HighlightClasses.scale);
 			
-			var nonScaleFretIDs = this.fretboard.GetNonScaleFrets().map(f => f.id);
+			
 			FretHTMLManager.AddHighlightingClassToIDs(nonScaleFretIDs, Util.HighlightClasses.nonScale);
-			if (!this.ShowNonScaleNotes) {
-				FretHTMLManager.AddHighlightingClassToIDs(nonScaleFretIDs, Util.HighlightClasses.nonScaleHide);
-			}
 
 			var scaleRootNoteIDs = this.fretboard.GetScaleRootFrets().map(f => f.id);
 			FretHTMLManager.AddHighlightingClassToIDs(scaleRootNoteIDs, Util.HighlightClasses.scaleRoot);
-		}
+		};
+
+		if (!this.ShowNonScaleNotes) {
+			FretHTMLManager.AddHighlightingClassToIDs(nonScaleFretIDs, Util.HighlightClasses.nonScaleHide);
+		};
 	},
 	HighlightChord: function(id){
 		function _AddChordHighlight(chordNoteFrets, chord, position, chordClass){
