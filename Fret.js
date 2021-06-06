@@ -1,25 +1,35 @@
-import * as Util from './Util.js';
-import * as MusicDefs from './MusicDefs.js';
-import {FretAttribute} from './FretAttribute.js';
+import { Scale } from "./Scale.js";
 
-export function Fret(note, stringNumber, fretNumber){
-	//console.log(note);
-	this.Note = note;
+export function Fret(note, stringNumber, fretNumber) {
+  //console.log(note);
+  this.Note = note;
 
-	this.StringNumber = stringNumber;
-	this.FretNumber = fretNumber;
+  this.StringNumber = stringNumber;
+  this.FretNumber = fretNumber;
 
-	this.HasNote = note !== null;
-	this.ScaleNote = false;
-	this.ScaleRootNote = false;
-	this.ChordNote = false;
-	this.Classes = null;
+  this.HasNote = note !== null;
+  this.ScaleNote = false;
+  this.ScaleRootNote = false;
+  this.ChordNote = false;
+  this.Classes = null;
 
-	this.FretAttributes = new Array();
+  this.NoteName = function () {
+    return this.Note.DisplayName;
+  };
 
-	this.HasFretAttribute = function (fretAttribute){
-		return this.FretAttributes.includes(fretAttribute);
-	}
+  this.ScalePosition = function (scale) {
+    var position = "";
+    if (scale.NoteLetters.includes(this.Note.Name)) {
+      position = scale.NoteLetters.indexOf(this.Note.Name) + 1;
+    }
+    return position;
+  };
 
-	this.id = 'string-' + stringNumber + '-fret-' + fretNumber;
-};
+  this.FretAttributes = new Array();
+
+  this.HasFretAttribute = function (fretAttribute) {
+    return this.FretAttributes.includes(fretAttribute);
+  };
+
+  this.id = "string-" + stringNumber + "-fret-" + fretNumber;
+}

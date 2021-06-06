@@ -1,66 +1,115 @@
-table, tr, td, th {
-	border: 1px solid #000047;
-	border-collapse: collapse;
-	padding: 2px;
-	margin: 0px;
+table,
+tr,
+td,
+th {
+  border: 1px solid #000047;
+  border-collapse: collapse;
+  padding: 2px;
+  margin: 0px;
+}
+
+th:first-child,
+td:first-child {
+  width: 80px;
+}
+
+.string-root {
+  /* width: 80px; */
+  background: #444444;
+  color: #dddddd;
+  font-weight: bolder;
 }
 
 td {
-	width: 100px;
+  width: 100px;
 }
 
-.fret {
-	width: 100px;
+.fretboard-header-row {
+  background: #444444;
+  color: #dddddd;
+  font-weight: bolder;
 }
 
+.fret,
 .fret-header {
-	width: 100px;
+  width: 80px;
+  border-right: 10px solid #362a0a;
+}
+
+.string > .fret ~ .fret,
+.fretboard-header-row > .fret-header ~ .fret-header {
+  width: 100px;
+  border-right: 1px solid #000047;
 }
 
 .scale {
-	background: #FF5555;
+  background: #ff5555;
 }
 
 .scale-root {
-	background: #FF0000;
+  background: #582a72;
+}
+
+.scale-second {
+  background: #963254;
+}
+
+.scale-third {
+  background: #aa5c39;
+}
+
+.scale-fourth {
+  background: #a8aa39;
+}
+
+.scale-fifth {
+  background: #609732;
+}
+
+.scale-sixth {
+  background: #257158;
+}
+
+.scale-seventh {
+  background: #294f6d;
 }
 
 .non-scale-hide {
-	color: transparent;
+  color: transparent;
 }
 
 .chord-note {
-	background: #008800;
+  background: #008800;
 }
 
 .chord-root {
-	background: #00FF00;
+  background: #00ff00;
 }
 
 .chord-third {
-	background: #00AA00;
+  background: #00aa00;
 }
 
 .chord-fifth {
-	background: #007700;
+  background: #007700;
 }
 
 .chord-seventh {
-	background: #005500;
+  background: #005500;
 }
 
 .scale-chord {
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	background: #222222;
-	color: #DDDDDD;
-	font-weight: bold;
-	border: 1px solid #000047;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #222222;
+  color: #dddddd;
+  font-weight: bold;
+  border: 1px solid #000047;
 }
 
 .scale-chord:hover {
-	background: #444444;
-	color: #FFFFFF;
+  background: #444444;
+  color: #ffffff;
 }

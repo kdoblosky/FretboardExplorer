@@ -5,14 +5,14 @@
 // import * as Scale from './Scale.js';
 // import {Fret} from './Fret.js';
 // import * as FretboardString from './FretboardString.js';
-import {FretHTMLManager} from './FretHTMLManager.js';
+import { FretHTMLManager } from "./FretHTMLManager.js";
 // import {Fretboard} from './Fretboard.js';
-import {FretboardController} from './FretboardController.js';
+import { FretboardController } from "./FretboardController.js";
 
-window.onload = function() {
-	FretboardController.Init();
-	FretboardController.SetTuningFromForm();
-	FretboardController.SetScaleFromForm();
-	window.FretboardController = FretboardController;
-	window.FretHTMLManager = FretHTMLManager;
+window.onload = function () {
+  window.FretboardController = FretboardController;
+  window.FretHTMLManager = FretHTMLManager;
+  FretboardController.Init();
+  FretboardController.SetTuningFromForm();
+  FretboardController.SetScaleFromForm();
 };

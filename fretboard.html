@@ -31,13 +31,14 @@
 
 		<input type="checkbox" id="highlight-chord-notes" name="HighlightChordNotes" value="true" onchange="FretboardController.SetHighlightChordNotes();" checked> 
 		<label for="hightlight-chord-notes">Highlight chord notes</label>
+
+		<input type="checkbox" id="show-scale-position-instead-of-note" name="ShowScalePositions" value="true" onchange="FretboardController.SetShowScalePositions();">
+		<label for="show-scale-position-instead-of-note">Show scale position instead of notes</label>
 		</p>
-		<!-- <p></p>
-		<input type='button' onclick='FretHTMLManager.RemoveAllHighlights()' value='Remove All Highlights'>
-		<input type='button' onclick='FretHTMLManager.RemoveAllHighlightingClasses()' value='Remove Scale Highlights'>
-		<input type='button' onclick='FretHTMLManager.RemoveChordHighlights()' value='Remove Chord Highlights'>
-		 -->
+		
 		<div id='fretboard-table'></div>
+		<p>
+		<div id='scale-chart'></div>
 		<p>
 		<div id='scale-chord-list-container'>
 		<p class='subhead2'>Triads in scale:</p>
