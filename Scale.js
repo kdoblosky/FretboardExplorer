@@ -87,13 +87,30 @@ export function Scale(root, scaleType) {
 
   this.ScaleNotes.forEach((sn) => {
     var chordType = getScaleChordType(sn, 3);
-    if (chordType !== null && chordType !== undefined) {
+    if (chordType) {
       this.ScaleChords.push(new ScaleChord(sn, chordType));
     }
 
     chordType = getScaleChordType(sn, 4);
-    if (chordType !== null && chordType !== undefined) {
+    if (chordType) {
       this.ScaleSeventhChords.push(new ScaleChord(sn, chordType));
     }
   });
+
+  this.GetEnharmonicScales = function () {
+    var scaleRelationshipIndex = MusicDefs.ScaleRelationships.indexOf(this.ScaleType.Name);
+
+    var enharmonicScales = [];
+
+    for (var i = 0; i < MusicDefs.ScaleRelationships.length; i++) {
+      if (i != scaleRelationshipIndex) {
+        var offset = i - scaleRelationshipIndex;
+        var startingNoteIndex = Util.GetIndexOffset(7, 0, offset);
+        var sc = this.NoteLetters[startingNoteIndex] + " " + MusicDefs.ScaleRelationships[i];
+        enharmonicScales.push(sc);
+      }
+    }
+
+    return enharmonicScales;
+  };
 }

@@ -21,6 +21,21 @@
 		<label for="scale-type-select">Scale Type:</label>
 		<select name="scaletype" id="scale-type-select" onchange="FretboardController.SetScaleFromForm();">
 		</select>
+
+		<div class='tooltip'>
+			Enharmonic scales
+			<span class='tooltip-text' id ='enharmonic-scales'></span>
+		</div>
+
+		<label for="capo-select">Capo Fret:</label>
+		<select name="caposelect" id="capo-select" onchange="FretboardController.SetCapo();">
+		</select>
+		<div class='tooltip help-icon'>
+			&nbsp;?&nbsp;
+			<span class='tooltip-text' id='capo-help-tooltip'>
+				Fret to put capo on. This will be treated as the open string value. Negative values are equivalent to tuning down. String column will show value without capo.
+			</span>
+		</div>
 		
 		<p>
 		<input type="checkbox" id="show-non-scale-notes" name="ShowNonScaleNotes" value="false" onchange="FretboardController.SetShowNonScaleNotes();">

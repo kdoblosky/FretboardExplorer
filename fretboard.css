@@ -42,6 +42,17 @@ td {
   border-right: 1px solid #000047;
 }
 
+.scale-root,
+.scale-second,
+.scale-third,
+.scale-fourth,
+.scale-fifth,
+.scale-sixth,
+.scale-seventh {
+  color: #ffffff;
+  font-weight: bolder;
+  text-align: center;
+}
 .scale {
   background: #ff5555;
 }
@@ -83,15 +94,15 @@ td {
 }
 
 .chord-root {
-  background: #00ff00;
+  background: #e969e9;
 }
 
 .chord-third {
-  background: #00aa00;
+  background: #e98ab0;
 }
 
 .chord-fifth {
-  background: #007700;
+  background: #ffa1c6;
 }
 
 .chord-seventh {
@@ -112,4 +123,36 @@ td {
 .scale-chord:hover {
   background: #444444;
   color: #ffffff;
+}
+
+.help-icon {
+  width: 40px;
+  background-color: #bbbbbb;
+  color: #ff0000;
+  /* font-weight: bolder; */
+  border: 1px solid black;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip > .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #999999;
+  color: #111111;
+  text-align: left;
+  padding: 5px;
+  border-radius: 6px;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover > .tooltip-text {
+  visibility: visible;
 }

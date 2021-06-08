@@ -1,12 +1,27 @@
 import { Note } from "./Note.js";
 import { Fret } from "./Fret.js";
+import * as Util from "./Util.js";
+import * as MusicDefs from "./MusicDefs.js";
 
-export function FretboardString(rootNote, numFrets, stringNumber, startNumber) {
-  if (startNumber === undefined) {
+export function FretboardString(rootNote, numFrets, stringNumber, startNumber, capoFret) {
+  if (!startNumber) {
     startNumber = 0;
   }
   this.RootNote = rootNote;
-  var root = new Note(rootNote);
+  if (!capoFret) {
+    capoFret = 0;
+  }
+  this.CapoFret = capoFret;
+
+  var root;
+
+  if (capoFret == 0) {
+    root = new Note(rootNote);
+  } else {
+    var adjustedNote = Util.GetArrayOffset(MusicDefs.AllNotes, rootNote, capoFret);
+    root = new Note(adjustedNote);
+  }
+
   this.StringNumber = stringNumber;
   this.id = "string-" + stringNumber;
   this.StartFret = startNumber;

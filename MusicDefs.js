@@ -157,18 +157,18 @@ export const ScaleTypes = [
       Intervals.HalfStep,
     ],
   },
-  {
-    Key: "Aolian",
-    Name: "Aolian",
-    Intervals: [
-      Intervals.WholeStep,
-      Intervals.HalfStep,
-      Intervals.WholeStep,
-      Intervals.WholeStep,
-      Intervals.HalfStep,
-      Intervals.WholeStep,
-    ],
-  },
+  // {
+  //   Key: "Aolian",
+  //   Name: "Aolian",
+  //   Intervals: [
+  //     Intervals.WholeStep,
+  //     Intervals.HalfStep,
+  //     Intervals.WholeStep,
+  //     Intervals.WholeStep,
+  //     Intervals.HalfStep,
+  //     Intervals.WholeStep,
+  //   ],
+  // },
   {
     Key: "Locrian",
     Name: "Locrian",
@@ -182,6 +182,8 @@ export const ScaleTypes = [
     ],
   },
 ];
+
+export const ScaleRelationships = ["Major", "Dorian", "Phrygian", "Lydian", "Mixolydian", "Minor", "Locrian"];
 
 export function GetScaleType(name) {
   return ScaleTypes.find((f) => f.Name === name);

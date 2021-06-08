@@ -9,6 +9,7 @@ export var FretHTMLManager = {
   _tuningSelectID: "tuning-select",
   _scaleSelectID: "scale-select",
   _scaleTypeSelectID: "scale-type-select",
+  _capoSelectID: "capo-select",
   GetNoteHTMLClass: function (note) {
     var classname = note.DisplayName;
     return classname.replace("#", "Sharp").replace(" / ", "-");
@@ -200,7 +201,22 @@ export var FretHTMLManager = {
     var scaleTypes = Object.keys(MusicDefs.ScaleTypes).map((t) => MusicDefs.ScaleTypes[t]);
     this.HTMLUtils.PopulateDropdown(this._scaleTypeSelectID, scaleTypes, "Key", "Name");
   },
+  PopulateCapo: function () {
+    var capoFrets = [];
+
+    for (var i = -2; i < 10; i++) {
+      capoFrets.push(i);
+    }
+
+    this.HTMLUtils.PopulateDropdown(this._capoSelectID, capoFrets);
+    document.getElementById(this._capoSelectID).selectedIndex = 2;
+  },
+  SetEnharmonicScales(scales) {
+    var text = scales.join("<br>");
+    document.getElementById("enharmonic-scales").innerHTML = text;
+  },
   Init: function () {
+    this.PopulateCapo();
     this.PopulateTunings();
     this.PopulateScales();
     this.PopulateScaleTypes();

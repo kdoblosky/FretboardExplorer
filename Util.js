@@ -27,6 +27,6 @@ export function GetIndexOffset(length, index, offset) {
  */
 export function GetArrayOffset(arr, item, offset) {
   var index = arr.indexOf(item);
-  var newIndex = this.GetIndexOffset(arr.length, index, offset);
+  var newIndex = this.GetIndexOffset(arr.length, index, parseInt(offset, 10));
   return arr[newIndex];
 }

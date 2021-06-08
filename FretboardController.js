@@ -14,6 +14,7 @@ export var FretboardController = {
   HighlightScaleNotes: true,
   HighlightChordNotes: true,
   ShowScalePositions: false,
+  capoFret: 0,
 
   SetHighlightScaleNotes: function () {
     this.HighlightScaleNotes = FretHTMLManager.HTMLUtils.GetHighlightScaleNotesValue();
@@ -35,8 +36,15 @@ export var FretboardController = {
     FretHTMLManager.HTMLUtils.SetShowNonScaleNotesValue(false);
     this.ReDraw();
   },
+
+  SetCapo: function () {
+    this.fretboard.CapoFret = parseInt(FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._capoSelectID), 10);
+    this.ReDraw();
+  },
+
   SetTuning: function (tuning) {
-    Fretboard.SetTuning(tuning);
+    this.fretboard.Tuning = tuning;
+    //Fretboard.SetTuning(tuning, this.capoFret);
     FretHTMLManager.RedrawFretboard();
     if (this.fretboard.Scale !== undefined && this.fretboard.Scale !== null) {
       this.ReDraw();
@@ -58,7 +66,9 @@ export var FretboardController = {
     this.SetScale(scale);
   },
   SetScale: function (scale) {
-    this.fretboard.SetScale(scale);
+    this.fretboard.Scale = scale;
+    var enharmonicScales = scale.GetEnharmonicScales();
+    FretHTMLManager.SetEnharmonicScales(enharmonicScales);
     this.ReDraw();
   },
   SetHighlights: function () {
@@ -108,9 +118,11 @@ export var FretboardController = {
     }
   },
   ReDraw: function () {
+    this.fretboard.SetTuning(this.fretboard.Tuning);
+    this.fretboard.SetScale(this.fretboard.Scale);
     FretHTMLManager.RedrawFretboard();
     FretHTMLManager.DrawScaleChart();
-    FretHTMLManager.RemoveChordHighlights();
+    //FretHTMLManager.RemoveChordHighlights();
     //FretHTMLManager.RemoveAllHighlightingClasses();
     this.SetHighlights();
     FretHTMLManager.RedrawChordList();

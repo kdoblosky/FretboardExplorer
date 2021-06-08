@@ -18,7 +18,7 @@ export function Fret(note, stringNumber, fretNumber) {
   };
 
   this.ScalePosition = function (scale) {
-    var position = "";
+    var position;
     if (scale.NoteLetters.includes(this.Note.Name)) {
       position = scale.NoteLetters.indexOf(this.Note.Name) + 1;
     }

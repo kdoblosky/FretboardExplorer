@@ -1,5 +1,8 @@
 import { FretboardString } from "./FretboardString.js";
 import { FretAttribute } from "./FretAttribute.js";
+import * as MusicDefs from "./MusicDefs.js";
+import * as Util from "./Util.js";
+import { Note } from "./Note.js";
 
 export var Fretboard = {
   FretboardMap: new Array(),
@@ -7,6 +10,7 @@ export var Fretboard = {
   Tuning: {},
   HTMLManager: {},
   FretsPerString: 12,
+  CapoFret: 0,
 
   ResetFrets: function () {
     var frets = this.GetAllFrets();
@@ -87,13 +91,22 @@ export var Fretboard = {
     return this.GetAllFrets().filter((f) => f.FretAttributes.includes(attribute));
   },
 
-  SetTuning: function (tuning) {
+  SetTuning: function (tuning, capoFret) {
+    if (capoFret) {
+      this.CapoFret = capoFret;
+    }
     this.Tuning = tuning;
     this.FretboardMap = [];
     for (var i = 0; i < this.Tuning.Strings.length; i++) {
       //Strings: [{Note: 'G'; Start: 5}, 'D', 'G', 'B', 'D']
       // This is to accomodate instruments like the 5-string banjo,
       // where the 5th string doesn't start until the 6th fret.
+
+      // var adjustedNote = this.Tuning.Strings[i].Note;
+      // if (capoFret != 0) {
+      //   var n = Util.GetArrayOffset(MusicDefs.AllNote, adjustedNote.Name, capoFret);
+      //   adjustedNote = new Note(n);
+      // }
       if (
         Object.prototype.hasOwnProperty.call(this.Tuning.Strings[i], "Note") &&
         Object.prototype.hasOwnProperty.call(this.Tuning.Strings[i], "Start")
@@ -101,10 +114,20 @@ export var Fretboard = {
         //this.Tuning.Strings[i].hasOwnProperty("Start")
       ) {
         this.FretboardMap.push(
-          new FretboardString(this.Tuning.Strings[i].Note, this.FretsPerString, i, this.Tuning.Strings[i].Start)
+          new FretboardString(
+            this.Tuning.Strings[i].Note,
+            this.FretsPerString,
+            i,
+            this.Tuning.Strings[i].Start,
+            this.CapoFret
+          )
+          //new FretboardString(adjustedNote, this.FretsPerString, i, this.Tuning.Strings[i].Start)
         );
       } else {
-        this.FretboardMap.push(new FretboardString(this.Tuning.Strings[i], this.FretsPerString, i));
+        this.FretboardMap.push(
+          new FretboardString(this.Tuning.Strings[i], this.FretsPerString, i, null, this.CapoFret)
+        );
+        //this.FretboardMap.push(new FretboardString(adjustedNote, this.FretsPerString, i));
       }
     }
 
