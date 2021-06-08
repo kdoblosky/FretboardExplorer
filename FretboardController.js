@@ -10,6 +10,8 @@ export var FretboardController = {
   fretboard: Fretboard,
   HTMLManager: FretHTMLManager,
 
+  HightlightedChord: null,
+
   ShowNonScaleNotes: false,
   HighlightScaleNotes: true,
   HighlightChordNotes: true,
@@ -32,9 +34,12 @@ export var FretboardController = {
   },
 
   SetShowScalePositions: function () {
+    if (this.ShowScalePositions) {
+      this.ShowNonScaleNotes = false;
+    }
     this.ShowScalePositions = FretHTMLManager.HTMLUtils.GetShowScalePositionsValue();
     FretHTMLManager.HTMLUtils.SetShowNonScaleNotesValue(false);
-    this.ReDraw();
+    this.SetShowNonScaleNotes();
   },
 
   SetCapo: function () {
@@ -78,15 +83,6 @@ export var FretboardController = {
       var frets = this.fretboard.GetFretsWithAttribute(FretAttribute[fa]).map((f) => f.id);
       FretHTMLManager.AddHighlightingClassToIDs(frets, CssUtils.GetFretAttributeCssClass(FretAttribute[fa]));
     });
-    // if (this.fretboard.Scale !== null && this.HighlightScaleNotes) {
-    //   var scaleFretIDs = this.fretboard.GetScaleFrets().map((f) => f.id);
-    //   FretHTMLManager.AddHighlightingClassToIDs(scaleFretIDs, CssUtils.HighlightClasses.scale);
-
-    //   FretHTMLManager.AddHighlightingClassToIDs(nonScaleFretIDs, CssUtils.HighlightClasses.nonScale);
-
-    //   var scaleRootNoteIDs = this.fretboard.GetScaleRootFrets().map((f) => f.id);
-    //   FretHTMLManager.AddHighlightingClassToIDs(scaleRootNoteIDs, CssUtils.HighlightClasses.scaleRoot);
-    // }
 
     if (!this.ShowNonScaleNotes) {
       FretHTMLManager.AddHighlightingClassToIDs(nonScaleFretIDs, CssUtils.HighlightClasses.nonScaleHide);
@@ -99,22 +95,33 @@ export var FretboardController = {
     }
 
     FretHTMLManager.RemoveChordHighlights();
-    if (this.HighlightChordNotes) {
-      var chord = this.fretboard.Scale.ScaleChords.find((sc) => sc.ID === id);
-      if (!chord) {
-        chord = this.fretboard.Scale.ScaleSeventhChords.find((sc) => sc.ID === id);
-      }
-      //console.log(chord);
-      var chordNoteNames = chord.Chord.Notes.map((n) => n.Name);
-      var chordNoteFrets = this.fretboard.GetAllFrets().filter((f) => chordNoteNames.includes(f.Note.Name));
-      //FretHTMLManager.AddHighlightingClassToIDs(chordNoteFrets.map(f => f.id), Util.ChordHighlightClasses.chordNote);
 
-      _AddChordHighlight(chordNoteFrets, chord, 0, CssUtils.ChordHighlightClasses.chordRoot);
-      _AddChordHighlight(chordNoteFrets, chord, 1, CssUtils.ChordHighlightClasses.chordThird);
-      _AddChordHighlight(chordNoteFrets, chord, 2, CssUtils.ChordHighlightClasses.chordFifth);
-      if (chord.Chord.Notes.length === 4) {
-        _AddChordHighlight(chordNoteFrets, chord, 3, CssUtils.ChordHighlightClasses.chordSeventh);
+    // If the chord was already highlighted, we don't want to re-highlight it
+    if (this.HighlightedChord != id) {
+      this.HighlightedChord = id;
+
+      if (this.HighlightChordNotes) {
+        FretHTMLManager.SetChordChartHighlightClass(id);
+
+        var chord = this.fretboard.Scale.ScaleChords.find((sc) => sc.ID === id);
+        if (!chord) {
+          chord = this.fretboard.Scale.ScaleSeventhChords.find((sc) => sc.ID === id);
+        }
+
+        var chordNoteNames = chord.Chord.Notes.map((n) => n.Name);
+        var chordNoteFrets = this.fretboard.GetAllFrets().filter((f) => chordNoteNames.includes(f.Note.Name));
+
+        _AddChordHighlight(chordNoteFrets, chord, 0, CssUtils.ChordHighlightClasses.chordRoot);
+        _AddChordHighlight(chordNoteFrets, chord, 1, CssUtils.ChordHighlightClasses.chordThird);
+        _AddChordHighlight(chordNoteFrets, chord, 2, CssUtils.ChordHighlightClasses.chordFifth);
+        if (chord.Chord.Notes.length === 4) {
+          _AddChordHighlight(chordNoteFrets, chord, 3, CssUtils.ChordHighlightClasses.chordSeventh);
+        }
+        FretHTMLManager.SetChordDetailChart(chord.Chord);
       }
+    } else {
+      FretHTMLManager.SetChordDetailChart(null);
+      this.HighlightedChord = null;
     }
   },
   ReDraw: function () {
@@ -122,8 +129,7 @@ export var FretboardController = {
     this.fretboard.SetScale(this.fretboard.Scale);
     FretHTMLManager.RedrawFretboard();
     FretHTMLManager.DrawScaleChart();
-    //FretHTMLManager.RemoveChordHighlights();
-    //FretHTMLManager.RemoveAllHighlightingClasses();
+
     this.SetHighlights();
     FretHTMLManager.RedrawChordList();
   },

@@ -94,6 +94,7 @@ export var CssUtils = {
     chordThird: "chord-third",
     chordFifth: "chord-fifth",
     chordSeventh: "chord-seventh",
+    chordHighlight: "scale-chord-highlight",
   },
   HighlightClasses: {
     scale: "scale",

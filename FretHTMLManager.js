@@ -52,7 +52,13 @@ export var FretHTMLManager = {
       return document.getElementById("highlight-chord-notes").checked;
     },
     GetShowScalePositionsValue: function () {
-      return document.getElementById("show-scale-position-instead-of-note").checked;
+      // if this is enabled, show-non-scale-notes should be disabled
+      var value = document.getElementById("show-scale-position-instead-of-note").checked;
+      var ssn = document.getElementById("show-non-scale-notes");
+
+      ssn.disabled = value;
+
+      return value;
     },
     SetShowNonScaleNotesValue: function (value) {
       document.getElementById("show-non-scale-notes").checked = value;
@@ -61,8 +67,31 @@ export var FretHTMLManager = {
   RemoveAllHighlightingClasses: function () {
     Object.values(CssUtils.HighlightClasses).forEach((c) => this.HTMLUtils.RemoveHTMLClassFromFrets(c));
   },
+  SetChordChartHighlightClass: function (id) {
+    var c = document.getElementById(id);
+    c.classList.add(CssUtils.ChordHighlightClasses.chordHighlight);
+  },
   RemoveChordHighlights: function () {
-    Object.values(CssUtils.ChordHighlightClasses).forEach((c) => this.HTMLUtils.RemoveHTMLClassFromFrets(c));
+    Object.values(CssUtils.ChordHighlightClasses).forEach((c) => {
+      this.HTMLUtils.RemoveHTMLClassFromFrets(c);
+    });
+    // There should only be one highlighted chord
+    var chords = document.getElementsByClassName(CssUtils.ChordHighlightClasses.chordHighlight);
+    Array.prototype.forEach.call(chords, (c) => c.classList.remove(CssUtils.ChordHighlightClasses.chordHighlight));
+  },
+  SetChordDetailChart: function (chord) {
+    var html = "";
+
+    if (chord) {
+      html += "<div class='chord-detail'>";
+      html += "<span class='chord-detail-header'>" + chord.Name + "</span>";
+      chord.Notes.forEach((n) => {
+        html += "<span class='chord-detail-note'>" + n.DisplayName + "</span>";
+      });
+      html += "</div>";
+    }
+    var chart = document.getElementById("chord-detail-chart");
+    chart.innerHTML = html;
   },
   RemoveAllHighlights: function () {
     this.RemoveAllHighlightingClasses();

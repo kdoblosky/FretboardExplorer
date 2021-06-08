@@ -109,6 +109,40 @@ td {
   background: #005500;
 }
 
+.chord-detail {
+  width: auto;
+  /* border: 1px solid #e969e9; */
+}
+
+.chord-detail-header {
+  background: #e969e9;
+  padding: 5px;
+  color: #111111;
+  border: 1px solid #e969e9;
+}
+
+.chord-detail-note {
+  background: #ffa1c6;
+  padding: 5px;
+  color: #111111;
+  border: 1px solid #e969e9;
+}
+
+#scale-chord-list-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+.flex-container {
+  vertical-align: bottom;
+}
+#chord-detail-chart {
+  margin-left: 20px;
+  margin-top: auto;
+}
+/* .flex-container {
+   margin: auto; 
+} */
 .scale-chord {
   padding-left: 10px;
   padding-right: 10px;
@@ -123,6 +157,11 @@ td {
 .scale-chord:hover {
   background: #444444;
   color: #ffffff;
+}
+
+.scale-chord-highlight {
+  background: #666666;
+  color: #eeeeee;
 }
 
 .help-icon {
