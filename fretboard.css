@@ -132,6 +132,7 @@ td {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
+  min-height: 30px;
 }
 
 .chord-detail-prefix,
@@ -154,6 +155,7 @@ td {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
+  min-height: 20px;
 }
 .flex-container {
   vertical-align: bottom;
