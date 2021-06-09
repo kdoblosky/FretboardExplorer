@@ -128,11 +128,13 @@ td {
   border: 1px solid #111111;
 }
 
-#scale-chart-container {
+#scale-chart-container,
+#chord-detail-chart {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   min-height: 30px;
+  margin-top: auto;
 }
 
 .chord-detail-prefix,
@@ -157,16 +159,15 @@ td {
   justify-content: flex-start;
   min-height: 20px;
 }
-.flex-container {
-  vertical-align: bottom;
+#scale-chart-container {
+  margin-right: 20px;
 }
-#chord-detail-chart {
+/* #chord-detail-chart {
   margin-left: 20px;
-  margin-top: auto;
-}
+} */
 
 /* .flex-container {
-   margin: auto; 
+   margin: auto;
 } */
 .scale-chord {
   padding-left: 10px;
