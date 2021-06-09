@@ -100,13 +100,13 @@ export var FretboardController = {
     if (this.HighlightedChord != id) {
       this.HighlightedChord = id;
 
+      var chord = this.fretboard.Scale.ScaleChords.find((sc) => sc.ID === id);
+      if (!chord) {
+        chord = this.fretboard.Scale.ScaleSeventhChords.find((sc) => sc.ID === id);
+      }
+      FretHTMLManager.SetChordDetailChart(chord.Chord);
       if (this.HighlightChordNotes) {
         FretHTMLManager.SetChordChartHighlightClass(id);
-
-        var chord = this.fretboard.Scale.ScaleChords.find((sc) => sc.ID === id);
-        if (!chord) {
-          chord = this.fretboard.Scale.ScaleSeventhChords.find((sc) => sc.ID === id);
-        }
 
         var chordNoteNames = chord.Chord.Notes.map((n) => n.Name);
         var chordNoteFrets = this.fretboard.GetAllFrets().filter((f) => chordNoteNames.includes(f.Note.Name));
@@ -117,7 +117,6 @@ export var FretboardController = {
         if (chord.Chord.Notes.length === 4) {
           _AddChordHighlight(chordNoteFrets, chord, 3, CssUtils.ChordHighlightClasses.chordSeventh);
         }
-        FretHTMLManager.SetChordDetailChart(chord.Chord);
       }
     } else {
       FretHTMLManager.SetChordDetailChart(null);

@@ -118,14 +118,14 @@ td {
   background: #e969e9;
   padding: 5px;
   color: #111111;
-  border: 1px solid #e969e9;
+  border: 1px solid #111111;
 }
 
 .chord-detail-note {
   background: #ffa1c6;
   padding: 5px;
   color: #111111;
-  border: 1px solid #e969e9;
+  border: 1px solid #111111;
 }
 
 #scale-chart-container {
@@ -134,6 +134,7 @@ td {
   justify-content: flex-start;
 }
 
+.chord-detail-prefix,
 .scale-chart-header {
   background-color: #c9c1ab;
   color: #222222;
@@ -161,6 +162,7 @@ td {
   margin-left: 20px;
   margin-top: auto;
 }
+
 /* .flex-container {
    margin: auto; 
 } */

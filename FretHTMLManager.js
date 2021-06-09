@@ -84,7 +84,7 @@ export var FretHTMLManager = {
     var html = "";
 
     if (chord) {
-      html += "<div class='chord-detail'>";
+      html += "<div class='chord-detail'><span class='chord-detail-prefix'>Selected Chord: </span>";
       html += "<span class='chord-detail-header'>" + chord.Name + "</span>";
       chord.Notes.forEach((n) => {
         html += "<span class='chord-detail-note'>" + n.DisplayName + "</span>";
@@ -137,7 +137,8 @@ export var FretHTMLManager = {
 
     var scale = window.FretboardController.fretboard.Scale;
 
-    var scaleChartHtml = "<div class='scale-chart'><span class='scale-chart-header'>" + scale.Name + ": </span>";
+    var scaleChartHtml =
+      "<div class='scale-chart'><span class='scale-chart-header'>Notes in " + scale.Name + " scale: </span>";
 
     for (var i = 0; i < scaleCss.length; i++) {
       scaleChartHtml += "<span class='scale-chart-item " + scaleCss[i] + "'>";
