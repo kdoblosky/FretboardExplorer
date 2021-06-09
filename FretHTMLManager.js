@@ -2,6 +2,7 @@ import * as MusicDefs from "./MusicDefs.js";
 import { Fretboard } from "./Fretboard.js";
 import { CssUtils } from "./CssUtils.js";
 import { Scale } from "./Scale.js";
+import { Note } from "./Note.js";
 
 export var FretHTMLManager = {
   FretboardTable: document.getElementById("fretboard-table"),
@@ -136,21 +137,17 @@ export var FretHTMLManager = {
 
     var scale = window.FretboardController.fretboard.Scale;
 
-    var headerRow = "<tr>";
-    var noteRow = "<tr>";
+    var scaleChartHtml = "<div class='scale-chart'><span class='scale-chart-header'>" + scale.Name + ": </span>";
 
     for (var i = 0; i < scaleCss.length; i++) {
-      var cellPrefix = "<td class='" + scaleCss[i] + "'>";
-      //headerRow += cellPrefix + (i === 0) ? "Root / 1" : (i + 1).toString() + "</td>";
-      headerRow += cellPrefix + (i === 0 ? "Root / 1" : (i + 1).toString()) + "</td>";
-      noteRow += cellPrefix + scale.NoteLetters[i] + "</td>";
+      scaleChartHtml += "<span class='scale-chart-item " + scaleCss[i] + "'>";
+      var note = new Note(scale.NoteLetters[i]);
+      scaleChartHtml += (i + 1).toString() + " / " + note.DisplayName + "</span>";
     }
 
-    var scaleChartHtml = "<h3>" + scale.Name + " contains these notes</h2>";
-    scaleChartHtml += "<table>" + headerRow + "</tr>";
-    scaleChartHtml += noteRow + "</tr></table>";
+    scaleChartHtml += "</div>";
 
-    var scaleChart = document.getElementById("scale-chart");
+    var scaleChart = document.getElementById("scale-chart-container");
     scaleChart.innerHTML = scaleChartHtml;
   },
   RedrawFretboard: function () {

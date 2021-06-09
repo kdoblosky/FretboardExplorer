@@ -128,6 +128,27 @@ td {
   border: 1px solid #e969e9;
 }
 
+#scale-chart-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.scale-chart-header {
+  background-color: #c9c1ab;
+  color: #222222;
+  padding: 5px;
+  border: 1px solid #111111;
+  font-weight: bolder;
+}
+
+.scale-chart-item {
+  padding: 5px;
+  border: 1px solid #111111;
+}
+
+#selected-scale-chord-container,
+#seventh-chord-list-container,
 #scale-chord-list-container {
   display: flex;
   flex-flow: row wrap;
