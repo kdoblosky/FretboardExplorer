@@ -32,7 +32,7 @@ describe("Test Fret", () => {
   });
 
   test("Test NoteName", () => {
-    expect(fret.NoteName()).toBe("D# / Eb");
+    expect(fret.NoteName()).toBe("D#");
   });
 });
 

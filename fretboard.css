@@ -90,7 +90,7 @@ td {
 }
 
 .chord-note {
-  background: #008800;
+  background: #c057c0;
 }
 
 .chord-root {
@@ -106,7 +106,7 @@ td {
 }
 
 .chord-seventh {
-  background: #005500;
+  background: #fdc1d9;
 }
 
 .chord-detail {
@@ -115,14 +115,14 @@ td {
 }
 
 .chord-detail-header {
-  background: #e969e9;
+  background: #c057c0;
   padding: 5px;
   color: #111111;
   border: 1px solid #111111;
 }
 
 .chord-detail-note {
-  background: #ffa1c6;
+  /* background: #ffa1c6; */
   padding: 5px;
   color: #111111;
   border: 1px solid #111111;

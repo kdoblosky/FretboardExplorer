@@ -82,15 +82,30 @@ export var FretHTMLManager = {
     Array.prototype.forEach.call(chords, (c) => c.classList.remove(CssUtils.ChordHighlightClasses.chordHighlight));
   },
   SetChordDetailChart: function (chord) {
+    const chordNoteHighlightClasses = [
+      CssUtils.ChordHighlightClasses.chordRoot,
+      CssUtils.ChordHighlightClasses.chordThird,
+      CssUtils.ChordHighlightClasses.chordFifth,
+      CssUtils.ChordHighlightClasses.chordSeventh,
+    ];
     var html = "";
 
     if (chord) {
       html += "<div class='chord-detail'><span class='chord-detail-prefix'>Selected Chord: </span>";
       //html += "<span class='chord-detail-header'>" + chord.Name + "</span>";
       html += "<span class='chord-detail-header'>" + chord.DisplayName(Fretboard.Scale.UseAltNames) + "</span>";
-      chord.Notes.forEach((n) => {
-        html += "<span class='chord-detail-note'>" + n.DisplayName + "</span>";
-      });
+      for (var i = 0; i < chord.Notes.length; i++) {
+        var n = chord.Notes[i];
+        html +=
+          "<span class='chord-detail-note " +
+          chordNoteHighlightClasses[i] +
+          "'>" +
+          (Fretboard.Scale.UseAltNames ? n.AltName : n.Name) +
+          "</span>";
+        // chord.Notes.forEach((n) => {
+        //   html += "<span class='chord-detail-note'>" + (Fretboard.Scale.UseAltNames ? n.AltName : n.Name) + "</span>";
+        // });
+      }
       html += "</div>";
     }
     var chart = document.getElementById("chord-detail-chart");

@@ -226,6 +226,27 @@ export var ChordTypes = [
     Intervals: [Intervals.PerfectFourth, Intervals.PerfectFifth],
   },
   {
+    Name: "Augmented",
+    NumberOfNotes: 3,
+    Display: "aug",
+    NashvilleSuffix: "+",
+    Intervals: [Intervals.MajorThird, Intervals.MinorSixth],
+  },
+  {
+    Name: "Major6th",
+    NumberOfNotes: 4,
+    Display: "6",
+    NashvilleSuffix: "6",
+    Intervals: [Intervals.MajorThird, Intervals.PerfectFifth, Intervals.MajorSixth],
+  },
+  {
+    Name: "Minor6th",
+    NumberOfNotes: 4,
+    Display: "min6",
+    NashvilleSuffix: "m6",
+    Intervals: [Intervals.MinorThird, Intervals.PerfectFifth, Intervals.MajorSixth],
+  },
+  {
     Name: "Seventh",
     NumberOfNotes: 4,
     Display: "7",
