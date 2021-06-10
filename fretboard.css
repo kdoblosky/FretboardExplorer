@@ -152,7 +152,7 @@ td {
 }
 
 #selected-scale-chord-container,
-#seventh-chord-list-container,
+/* #seventh-chord-list-container, */
 #scale-chord-list-container {
   display: flex;
   flex-flow: row wrap;
@@ -170,12 +170,13 @@ td {
    margin: auto;
 } */
 .scale-chord {
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  /* padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px; */
   background: #222222;
   color: #dddddd;
+  font-size: small;
   font-weight: bold;
   border: 1px solid #000047;
 }

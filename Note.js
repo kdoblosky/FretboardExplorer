@@ -13,7 +13,7 @@ export function Note(name) {
 
   this.Index = MusicDefs.AllNotes.indexOf(name);
 
-  var getNoteOffset = function (offset) {
+  this.GetNoteOffset = function (offset) {
     return Util.GetArrayOffset(MusicDefs.AllNotes, that.Name, offset);
   };
 
@@ -21,15 +21,16 @@ export function Note(name) {
     if (that.Name === "None") {
       return that.Name;
     } else if (that.Name.includes("#")) {
-      return getNoteOffset(1) + "b";
-      // } else if (that.Name == 'C')  {
-      //         return 'B#';
-      // } else if (that.Name == 'B') {
-      //     return 'Cb';
-      // } else if (that.Name == 'E') {
-      //     return 'Fb';
-      // } else if (that.Name == 'F') {
-      //     return 'E#';
+      return that.GetNoteOffset(1) + "b";
+      // TODO: handle exceptions for cases below
+      // } else if (that.Name == "C") {
+      //   return "B#";
+      // } else if (that.Name == "B") {
+      //   return "Cb";
+      // } else if (that.Name == "E") {
+      //   return "Fb";
+      // } else if (that.Name == "F") {
+      //   return "E#";
     } else {
       return that.Name;
     }
@@ -41,7 +42,7 @@ export function Note(name) {
     if (that.Name === "None") {
       return new Note("None");
     } else {
-      var offset = getNoteOffset(1);
+      var offset = this.GetNoteOffset(1);
       return new Note(offset);
     }
   };
@@ -50,7 +51,7 @@ export function Note(name) {
     if (that.Name === "None") {
       return new Note("None");
     } else {
-      var offset = getNoteOffset(-1);
+      var offset = this.GetNoteOffset(-1);
       return new Note(offset);
     }
   };

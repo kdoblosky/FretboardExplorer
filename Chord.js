@@ -7,7 +7,10 @@ export function Chord(rootNote, chordType) {
   this.Name = rootNote.Name + " " + chordType.Name;
   this.Root = rootNote;
   this.ChordType = chordType;
-  this.Display = rootNote.Name + chordType.Display;
+  this.Display = function (useAltNames) {
+    return (useAltNames ? rootNote.AltName : rootNote.Name) + chordType.Display;
+    //rootNote.Name + chordType.Display;
+  };
   this.Notes = [];
 
   this.Notes.push(rootNote);

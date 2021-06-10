@@ -4,7 +4,7 @@ import { Note } from "./Note.js";
 import { Chord } from "./Chord.js";
 
 export function Scale(root, scaleType) {
-  //var that = this;
+  var that = this;
   this.NoteLetters = new Array();
   this.ScaleType = scaleType;
   this.Root = root;
@@ -12,6 +12,7 @@ export function Scale(root, scaleType) {
   this.ScaleChords = new Array();
   this.ScaleSeventhChords = new Array();
   this.Name = root + " " + scaleType.Name;
+  this.UseAltNames = false;
 
   function ScaleNote(note, scaleType, scaleLetters) {
     this.Note = new Note(note);
@@ -22,6 +23,7 @@ export function Scale(root, scaleType) {
     this.Third = Util.GetArrayOffset(scaleLetters, note, 2);
     this.Fifth = Util.GetArrayOffset(scaleLetters, note, 4);
     this.Seventh = Util.GetArrayOffset(scaleLetters, note, 6);
+    this.ScaleChords = [];
   }
 
   function ScaleChord(scaleNote, chordType) {
@@ -31,18 +33,8 @@ export function Scale(root, scaleType) {
     this.ScaleRootNote = scaleNote;
 
     this.DisplayName = function () {
-      var number;
-      if (["Minor", "Diminished", "MinorSeventh", "HalfDiminishedSeventh"].includes(this.Chord.ChordType.Name)) {
-        number = this.NashvilleNumber.Minor;
-      } else {
-        number = this.NashvilleNumber.Major;
-      }
-
-      if (this.Chord.ChordType.Name.includes("Seventh")) {
-        number = number + "7";
-      }
-
-      return number + " - " + this.Chord.Display;
+      var number = this.NashvilleNumber.Position.toString() + this.Chord.ChordType.NashvilleSuffix;
+      return number + " - " + this.Chord.Display(that.UseAltNames);
     };
 
     this.Display = this.DisplayName();
@@ -67,6 +59,33 @@ export function Scale(root, scaleType) {
     this.ScaleNotes.push(new ScaleNote(letter, scaleType, this.NoteLetters));
   });
 
+  var distinctScaleLetters = this.NoteLetters.map((nl) => nl.replace("#", ""));
+  var setDistinct = new Set(distinctScaleLetters);
+  if (setDistinct.size != this.NoteLetters.length) {
+    this.UseAltNames = true;
+  } else {
+    this.UseAltNames = false;
+  }
+
+  function getAllScaleChords(startingNote) {
+    // Loop through all chord types, trying intervals
+    // If all notes are contained within the scale, then it's a valid chord
+    var chords = [];
+    MusicDefs.ChordTypes.forEach((ct) => {
+      var isScaleChord = true;
+      ct.Intervals.forEach((i) => {
+        if (!that.ScaleNotes.map((sn) => sn.Note.Name).includes(startingNote.Note.GetNoteOffset(i))) {
+          isScaleChord = false;
+        }
+      });
+
+      if (isScaleChord) {
+        chords.push(new ScaleChord(startingNote, ct));
+      }
+    });
+    return chords;
+  }
+
   function getScaleChordType(startingNote, numberOfNotes) {
     var intervals = [];
     intervals.push(startingNote.Note.GetInterval(new Note(startingNote.Third)));
@@ -86,12 +105,14 @@ export function Scale(root, scaleType) {
   }
 
   this.ScaleNotes.forEach((sn) => {
-    var chordType = getScaleChordType(sn, 3);
-    if (chordType) {
-      this.ScaleChords.push(new ScaleChord(sn, chordType));
-    }
+    // var chordType = getScaleChordType(sn, 3);
+    // if (chordType) {
+    //   this.ScaleChords.push(new ScaleChord(sn, chordType));
+    // }
+    sn.ScaleChords = getAllScaleChords(sn);
+    this.ScaleChords = this.ScaleChords.concat(sn.ScaleChords);
 
-    chordType = getScaleChordType(sn, 4);
+    var chordType = getScaleChordType(sn, 4);
     if (chordType) {
       this.ScaleSeventhChords.push(new ScaleChord(sn, chordType));
     }

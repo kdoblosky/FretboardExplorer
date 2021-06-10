@@ -126,8 +126,8 @@ export var FretboardController = {
   ReDraw: function () {
     this.fretboard.SetTuning(this.fretboard.Tuning);
     this.fretboard.SetScale(this.fretboard.Scale);
-    FretHTMLManager.RedrawFretboard();
-    FretHTMLManager.DrawScaleChart();
+    FretHTMLManager.RedrawFretboard(this.ShowScalePositions, this.fretboard.Scale);
+    FretHTMLManager.DrawScaleChart(this.fretboard.Scale);
 
     this.SetHighlights();
     FretHTMLManager.RedrawChordList();

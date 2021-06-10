@@ -13,8 +13,8 @@ export function Fret(note, stringNumber, fretNumber) {
   this.ChordNote = false;
   this.Classes = null;
 
-  this.NoteName = function () {
-    return this.Note.DisplayName;
+  this.NoteName = function (useAltName) {
+    return useAltName ? this.Note.AltName : this.Note.Name;
   };
 
   this.ScalePosition = function (scale) {
