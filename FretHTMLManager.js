@@ -86,7 +86,8 @@ export var FretHTMLManager = {
 
     if (chord) {
       html += "<div class='chord-detail'><span class='chord-detail-prefix'>Selected Chord: </span>";
-      html += "<span class='chord-detail-header'>" + chord.Name + "</span>";
+      //html += "<span class='chord-detail-header'>" + chord.Name + "</span>";
+      html += "<span class='chord-detail-header'>" + chord.DisplayName(Fretboard.Scale.UseAltNames) + "</span>";
       chord.Notes.forEach((n) => {
         html += "<span class='chord-detail-note'>" + n.DisplayName + "</span>";
       });

@@ -11,6 +11,9 @@ export function Chord(rootNote, chordType) {
     return (useAltNames ? rootNote.AltName : rootNote.Name) + chordType.Display;
     //rootNote.Name + chordType.Display;
   };
+  this.DisplayName = function (useAltName) {
+    return (useAltName ? this.Root.AltName : this.Root.Name) + " " + this.ChordType.Name;
+  };
   this.Notes = [];
 
   this.Notes.push(rootNote);
