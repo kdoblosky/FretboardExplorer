@@ -16,6 +16,7 @@ td:first-child {
 .string-root {
   /* width: 80px; */
   background: #444444;
+  background-image: url("headstock-bg.jpg");
   color: #dddddd;
   font-weight: bolder;
 }
@@ -33,13 +34,21 @@ td {
 .fret,
 .fret-header {
   width: 80px;
-  border-right: 10px solid #362a0a;
+  border-right: 10px solid #58423d;
 }
 
 .string > .fret ~ .fret,
 .fretboard-header-row > .fret-header ~ .fret-header {
   width: 100px;
   border-right: 1px solid #000047;
+}
+
+.fret-header {
+  background-image: url("headstock-bg.jpg");
+}
+
+.fret {
+  background-image: url("fret-bg.jpg");
 }
 
 .scale-root,
@@ -152,7 +161,6 @@ td {
 }
 
 #selected-scale-chord-container,
-/* #seventh-chord-list-container, */
 #scale-chord-list-container {
   display: flex;
   flex-flow: row wrap;
@@ -162,23 +170,22 @@ td {
 #scale-chart-container {
   margin-right: 20px;
 }
-/* #chord-detail-chart {
-  margin-left: 20px;
-} */
 
-/* .flex-container {
-   margin: auto;
-} */
+.table-header,
 .scale-chord {
-  /* padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px; */
-  background: #222222;
-  color: #dddddd;
+  padding: 5px;
   font-size: small;
   font-weight: bold;
-  border: 1px solid #000047;
+  border: 2px solid #666666;
+}
+
+.table-header {
+  background: #dddddd;
+  color: #222222;
+}
+.scale-chord {
+  background: #222222;
+  color: #dddddd;
 }
 
 .scale-chord:hover {

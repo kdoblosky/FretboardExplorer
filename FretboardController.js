@@ -132,7 +132,7 @@ export var FretboardController = {
     this.fretboard.SetScale(this.fretboard.Scale);
     FretHTMLManager.RedrawFretboard(this.ShowScalePositions, this.fretboard.Scale);
     FretHTMLManager.DrawScaleChart(this.fretboard.Scale);
-
+    FretHTMLManager.SetChordDetailChart(null);
     this.SetHighlights();
     FretHTMLManager.RedrawChordList();
   },

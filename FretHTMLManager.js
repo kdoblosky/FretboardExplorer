@@ -228,6 +228,11 @@ export var FretHTMLManager = {
     var numberOfRows = Math.max(...scaleNoteLengths);
 
     var chordlistHTML = "<table id='scale-chords'>";
+    chordlistHTML += "<tr class='table-header'>";
+    for (var j = 0; j < 7; j++) {
+      chordlistHTML += "<th class='table-header-cell'>" + (j + 1) + "</th>";
+    }
+
     for (var i = 0; i < numberOfRows; i++) {
       chordlistHTML += "<tr>";
 
