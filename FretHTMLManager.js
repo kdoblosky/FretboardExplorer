@@ -7,16 +7,24 @@ import { Note } from "./Note.js";
 
 export var FretHTMLManager = {
   FretboardTable: document.getElementById("fretboard-table"),
-  HighlightingClasses: ["scale", "scaleroot", "non-scale", "non-scale-hide", "chordroot", "chordthird", "chordfifth"],
+  //HighlightingClasses: ["scale", "scaleroot", "non-scale", "non-scale-hide", "chordroot", "chordthird", "chordfifth"],
   _tuningSelectID: "tuning-select",
   _scaleSelectID: "scale-select",
   _scaleTypeSelectID: "scale-type-select",
   _capoSelectID: "capo-select",
-  // GetNoteHTMLClass: function (note) {
-  //   var classname = note.DisplayName;
-  //   return classname.replace("#", "Sharp").replace(" / ", "-");
-  // },
+
+  /**
+   * Collection of utility functions for dealing with HTML.
+   */
   HTMLUtils: {
+    /**
+     * Populate a dropdown with the provided options.
+     *
+     * @param {string} dropdownID ID of the DOM dropdown element to populate
+     * @param {*} source Array of elements to populate
+     * @param {*} valueProperty Property of source to use as value for option. If null, use source itself.
+     * @param {*} textProperty Property of source to use as text for option. If null, use source itself.
+     */
     PopulateDropdown: function (dropdownID, source, valueProperty, textProperty) {
       var element = document.getElementById(dropdownID);
 
@@ -27,52 +35,134 @@ export var FretHTMLManager = {
         element.add(opt, null);
       });
     },
+
+    /**
+     * Get all DOM elements with the class 'fret'
+     *
+     * @returns
+     */
     GetFrets: function () {
       return document.getElementsByClassName("fret");
     },
+
+    /**
+     * Remove specified CSS class from all frets
+     *
+     * @param {string} className Name of class to remove
+     */
     RemoveHTMLClassFromFrets: function (className) {
       for (var f of this.GetFrets()) {
         f.classList.remove(className);
       }
     },
+
+    /**
+     * Add CSS class to all elements with the specified class.
+     *
+     * @param {string} classToFind CSS class for elements to add new class to.
+     * @param {string} classToAdd New CSS class to add.
+     */
     AddHTMLClassToFrets: function (classToFind, classToAdd) {
+      // TODO: Rename this, since it's not specific to frets
       for (var c of document.getElementsByClassName(classToFind)) {
         c.classList.add(classToAdd);
       }
     },
+
+    /**
+     * Get value of specified select dropdown.
+     *
+     * @param {string} id DOM ID of select element to get value of.
+     * @returns value of selected option.
+     */
     GetSelectValue: function (id) {
       var element = document.getElementById(id);
       return element.options[element.selectedIndex].value;
     },
+
+    /**
+     * Returns value of Show non-scale notes checkbox
+     *
+     * @returns {boolean} Should we show non-scale note labels?
+     */
     GetShowNonScaleNotesValue: function () {
       return document.getElementById("show-non-scale-notes").checked;
     },
+
+    /**
+     * Returns value of Highlight scale notes checkbox
+     *
+     * @returns {boolean} Should we highlight scale notes?
+     */
     GetHighlightScaleNotesValue: function () {
       return document.getElementById("highlight-scale-notes").checked;
     },
+
+    /**
+     * Returns value of Highlight chord notes checkbox
+     *
+     * @returns {boolean} Should we highlight chords?
+     */
     GetHighlightChordNotesValue: function () {
       return document.getElementById("highlight-chord-notes").checked;
     },
+
+    /**
+     * Returns value of Show scale position instead of notes checkbox. If this is checked,
+     * disable the Show non-scale notes checkbox.
+     *
+     * @returns {boolean} Should we show scale positions?
+     */
     GetShowScalePositionsValue: function () {
-      // if this is enabled, show-non-scale-notes should be disabled
       var value = document.getElementById("show-scale-position-instead-of-note").checked;
       var ssn = document.getElementById("show-non-scale-notes");
 
+      // if this is enabled, show-non-scale-notes should be disabled
       ssn.disabled = value;
 
       return value;
     },
+
+    /**
+     * Set checked status of Show non-scale notes checkbox
+     * @param {boolean} value
+     */
     SetShowNonScaleNotesValue: function (value) {
       document.getElementById("show-non-scale-notes").checked = value;
     },
+
+    /**
+     * Set the innerHTML of an element with the provided id.
+     *
+     * @param {string} id ID of the element to set
+     * @param {*} innerHtml Value to set innerHTML to.
+     */
+    SetInnerHtmlById: function (id, innerHtml) {
+      var element = document.getElementById(id);
+      element.innerHTML = innerHtml;
+    },
   },
+
+  /**
+   * Remove all CSS classes in CssUtils.HighlightClasses from frets.
+   */
   RemoveAllHighlightingClasses: function () {
     Object.values(CssUtils.HighlightClasses).forEach((c) => this.HTMLUtils.RemoveHTMLClassFromFrets(c));
   },
+
+  /**
+   * Add CSS class for chordHighlight to specified ID.
+   *
+   * @param {string} id DOM id of chord chart to add chordHighlight CSS class to.
+   */
   SetChordChartHighlightClass: function (id) {
     var c = document.getElementById(id);
     c.classList.add(CssUtils.ChordHighlightClasses.chordHighlight);
   },
+
+  /**
+   * Remove chord highlights from fretboard, and from chord chart
+   */
   RemoveChordHighlights: function () {
     Object.values(CssUtils.ChordHighlightClasses).forEach((c) => {
       this.HTMLUtils.RemoveHTMLClassFromFrets(c);
@@ -81,7 +171,34 @@ export var FretHTMLManager = {
     var chords = document.getElementsByClassName(CssUtils.ChordHighlightClasses.chordHighlight);
     Array.prototype.forEach.call(chords, (c) => c.classList.remove(CssUtils.ChordHighlightClasses.chordHighlight));
   },
+
+  /**
+   * Populate chord detail chart based on provided chord
+   *
+   * @param {Chord} chord Chord to populate chord detail chart from
+   */
   SetChordDetailChart: function (chord) {
+    function getChordDetailChartHeaderHTML(c) {
+      var headerHTML = "<div class='chord-detail'><span class='chord-detail-prefix'>Selected Chord: </span>";
+      headerHTML += "<span class='chord-detail-header'>" + c.DisplayName(Fretboard.Scale.UseAltNames) + "</span>";
+      return headerHTML;
+    }
+
+    function getChordDetailHTML(c) {
+      var detailHTML = "";
+      var n = c.Notes[i];
+      detailHTML =
+        "<span class='chord-detail-note " +
+        chordNoteHighlightClasses[i] +
+        "'>" +
+        (Fretboard.Scale.UseAltNames ? n.AltName : n.Name) +
+        "</span>";
+      return detailHTML;
+    }
+
+    function getChordDetailChartFooterHTML() {
+      return "</div>";
+    }
     const chordNoteHighlightClasses = [
       CssUtils.ChordHighlightClasses.chordRoot,
       CssUtils.ChordHighlightClasses.chordThird,
@@ -91,37 +208,73 @@ export var FretHTMLManager = {
     var html = "";
 
     if (chord) {
-      html += "<div class='chord-detail'><span class='chord-detail-prefix'>Selected Chord: </span>";
-      //html += "<span class='chord-detail-header'>" + chord.Name + "</span>";
-      html += "<span class='chord-detail-header'>" + chord.DisplayName(Fretboard.Scale.UseAltNames) + "</span>";
+      html += getChordDetailChartHeaderHTML(chord);
       for (var i = 0; i < chord.Notes.length; i++) {
-        var n = chord.Notes[i];
-        html +=
-          "<span class='chord-detail-note " +
-          chordNoteHighlightClasses[i] +
-          "'>" +
-          (Fretboard.Scale.UseAltNames ? n.AltName : n.Name) +
-          "</span>";
-        // chord.Notes.forEach((n) => {
-        //   html += "<span class='chord-detail-note'>" + (Fretboard.Scale.UseAltNames ? n.AltName : n.Name) + "</span>";
-        // });
+        html += getChordDetailHTML(chord);
       }
-      html += "</div>";
+      html += getChordDetailChartFooterHTML();
     }
-    var chart = document.getElementById("chord-detail-chart");
-    chart.innerHTML = html;
+
+    this.HTMLUtils.SetInnerHtmlById("chord-detail-chart", html);
   },
+
+  /**
+   * Remove all highlighting classes from fretboard.
+   */
   RemoveAllHighlights: function () {
     this.RemoveAllHighlightingClasses();
     this.RemoveChordHighlights();
   },
+
+  /**
+   * Add CSS class to DOM elements with provided IDs.
+   *
+   * @param {string[]} ids IDs of DOM elements to add class to
+   * @param {*} highlightingClass CSS class to add
+   */
   AddHighlightingClassToIDs(ids, highlightingClass) {
+    // TODO: Rename this, as it can be used for any CSS class.
     if (ids !== null && ids.length > 0) {
       ids.forEach((i) => document.getElementById(i).classList.add(highlightingClass));
     }
   },
 
+  /**
+   * (Re)generates HTML for scale chart.
+   * @param {Scale} scale
+   */
   DrawScaleChart: function (scale) {
+    /**
+     * Get HTML fragment for scale chart header.
+     *
+     * @param {Scale} scale
+     * @returns {string} HTML fragment for scale chart header.
+     */
+    function getScaleChartHeader(sc) {
+      return "<div class='scale-chart'><span class='scale-chart-header'>Notes in " + sc.Name + " scale: </span>";
+    }
+
+    /**
+     * Get HTML fragment for scale chart footer.
+     *
+     * @returns {string} HTML fragment for scale chart footer.
+     */
+    function getScaleChartFooter() {
+      return "</div>";
+    }
+
+    /**
+     * Get HTML fragment for a single note in the scale chart.
+     * @param {int} position 0-based index of scale position. Used as index for scaleCss and scale.NoteLetters.
+     * @returns {string} HTML fragment for a single note in the scale chart.
+     */
+    function getScaleChartNote(position) {
+      var noteHTML = "<span class='scale-chart-item " + scaleCss[position] + "'>";
+      var note = new Note(scale.NoteLetters[position]);
+      noteHTML += (position + 1).toString() + " / " + (scale.UseAltNames ? note.AltName : note.Name) + "</span>";
+      return noteHTML;
+    }
+
     var scaleCss = [
       CssUtils.HighlightClasses.scaleRoot,
       CssUtils.HighlightClasses.scaleSecond,
@@ -132,29 +285,41 @@ export var FretHTMLManager = {
       CssUtils.HighlightClasses.scaleSeventh,
     ];
 
-    // var scale = window.FretboardController.fretboard.Scale;
-
-    var scaleChartHtml =
-      "<div class='scale-chart'><span class='scale-chart-header'>Notes in " + scale.Name + " scale: </span>";
+    var scaleChartHtml = getScaleChartHeader(scale);
 
     for (var i = 0; i < scaleCss.length; i++) {
-      scaleChartHtml += "<span class='scale-chart-item " + scaleCss[i] + "'>";
-      var note = new Note(scale.NoteLetters[i]);
-      //scaleChartHtml += (i + 1).toString() + " / " + note.DisplayName + "</span>";
-      scaleChartHtml += (i + 1).toString() + " / " + (scale.UseAltNames ? note.AltName : note.Name) + "</span>";
+      scaleChartHtml += getScaleChartNote(i);
     }
 
-    scaleChartHtml += "</div>";
+    scaleChartHtml += getScaleChartFooter();
 
-    var scaleChart = document.getElementById("scale-chart-container");
-    scaleChart.innerHTML = scaleChartHtml;
+    this.HTMLUtils.SetInnerHtmlById("scale-chart-container", scaleChartHtml);
   },
 
+  /**
+   * (Re)generates the HTML for the fretboard.
+   *
+   * @param {boolean} showScalePositions When true, show scale positions (1, 2, etc.). When false, show note names.
+   * @param {Scale} scale Scale to display on fretboard
+   */
   RedrawFretboard: function (showScalePositions, scale) {
+    /**
+     * Get the CSS class to be applied to frets with the specified note.
+     *
+     * @param {Note} note
+     * @returns {string} CSS class for the specified Note.
+     */
     function GetNoteHTMLClass(note) {
       var classname = note.DisplayName;
       return classname.replace("#", "Sharp").replace(" / ", "-");
     }
+
+    /**
+     * Get css classes associated with FretAttributes for the specified fret.
+     *
+     * @param {Fret} fret
+     * @returns Array of strings, with each element corresponding to a single CSS class
+     */
     function GetFretCssClasses(fret) {
       var classes = [];
       fret.FretAttributes.forEach((f) => {
@@ -165,6 +330,14 @@ export var FretHTMLManager = {
         return classes;
       });
     }
+
+    /**
+     * Get css classes associated with FretAttributes for the specified fret, along with the provided extra classes.
+     *
+     * @param {Fret} fret The Fret to get CSS classes for.
+     * @param {*} extra An array of strings with extra CSS classes to apply.
+     * @returns A string of all CSS classes to be applied, separated by spaces.
+     */
     function GetFretCssClassesWithDefault(fret, extra) {
       var classes = GetFretCssClasses(fret);
       var allClasses;
@@ -176,6 +349,13 @@ export var FretHTMLManager = {
       }
       return allClasses.join(" ");
     }
+
+    /**
+     * Get HTML fragment for a single Fret.
+     *
+     * @param {Fret} fret
+     * @returns {string} HTML fragment representing a single fret.
+     */
     function getFretHTML(fret) {
       classes = GetFretCssClassesWithDefault(fret, ["fret", GetNoteHTMLClass(fret.Note)]);
 
@@ -188,6 +368,13 @@ export var FretHTMLManager = {
       }
       return "<td class='" + classes + "' id='" + fret.id + "'>" + display + "</td>";
     }
+
+    /**
+     * Get HTML fragment for a single FretboardString.
+     *
+     * @param {FretboardString} fs
+     * @returns {string} HTML fragment for a single FretboardString.
+     */
     function getFretboardStringHTML(fs) {
       var fsHtml = "<tr class='string' id='" + fs.id + "'>";
 
@@ -201,63 +388,142 @@ export var FretHTMLManager = {
       return fsHtml;
     }
 
-    var fretboardHTMLTable = "<table>";
-    var classes;
+    /**
+     * Get HTML fragment for the header of the fretboard.
+     *
+     * @returns HTML fragment for the header of the fretboard.
+     */
+    function getFretboardHeaderHTML() {
+      var headerHTML = "<table>";
 
-    fretboardHTMLTable += "<tr class='fretboard-header-row'><th class='string-root'>String</th>";
-    for (var i = 0; i <= Fretboard.FretsPerString; i++) {
-      fretboardHTMLTable += "<th scope='col' class='fret-header'>" + (i === 0 ? "Open" : i) + "</th>";
+      headerHTML += "<tr class='fretboard-header-row'><th class='string-root'>String</th>";
+      for (var i = 0; i <= Fretboard.FretsPerString; i++) {
+        headerHTML += "<th scope='col' class='fret-header'>" + (i === 0 ? "Open" : i) + "</th>";
+      }
+      headerHTML += "</tr>";
+
+      return headerHTML;
     }
-    fretboardHTMLTable += "</tr>";
+
+    /**
+     * Get HTML fragment for the footer of the fretboard.
+     *
+     * @returns HTML fragment for the footer of the fretboard.
+     */
+    function getFretboardFooterHTML() {
+      return "</table>";
+    }
+
+    var fretboardHTMLTable = getFretboardHeaderHTML();
+    var classes;
 
     Fretboard.FretboardMap.map((x) => x)
       .reverse()
       .forEach((fs) => {
         fretboardHTMLTable += getFretboardStringHTML(fs);
       });
-    fretboardHTMLTable += "</table>";
+    fretboardHTMLTable += getFretboardFooterHTML();
 
     if (this.FretboardTable === null) {
       this.FretboardTable = document.getElementById("fretboard-table");
     }
     this.FretboardTable.innerHTML = fretboardHTMLTable;
   },
+
+  /**
+   * (Re)generates the HTML for the chord list.
+   */
   RedrawChordList: function () {
+    /**
+     * Get HTML fragment chord list header.
+     *
+     * @returns {string} HTML fragment for chord list header.
+     */
+    function getChordListHeader() {
+      var headerHTML = "<table id='scale-chords'>";
+      headerHTML += "<tr class='table-header'>";
+      for (var j = 0; j < 7; j++) {
+        headerHTML += "<th class='table-header-cell'>" + (j + 1) + "</th>";
+      }
+      headerHTML += "</tr>";
+      return headerHTML;
+    }
+
+    /**
+     * Get HTML fragment chord list footer.
+     *
+     * @returns {string} HTML fragment for chord list footer.
+     */
+    function getChordListFooter() {
+      return "</table>";
+    }
+
+    /**
+     * Get HTML fragment for a single chord.
+     *
+     * @param {ScaleNote} sn ScaleNote to find chord for
+     * @param {int} row Row to find chord for. Corresponds to index of sn.ScaleChords.
+     * @returns {string} HTML fragment for a single chord.
+     */
+    function getChordListChordHTML(sn, row) {
+      var chordHTML = "";
+      if (sn.ScaleChords[row]) {
+        chordHTML +=
+          "<td class='scale-chord ' id='" +
+          sn.ScaleChords[row].ID +
+          "' onclick='FretboardController.HighlightChord(this.id)'>" +
+          sn.ScaleChords[row].Display +
+          "</td>";
+      } else {
+        chordHTML += "<td class='scale-chord'></td>";
+      }
+
+      return chordHTML;
+    }
+
+    /**
+     * Get HTML fragment for row of chords
+     *
+     * @param {int} row
+     * @returns {string} HTML fragment corresponding to a row of chords
+     */
+    function getChordListRowHTML(row) {
+      var rowHTML = "<tr>";
+
+      Fretboard.Scale.ScaleNotes.forEach((sn) => {
+        rowHTML += getChordListChordHTML(sn, row);
+      });
+      rowHTML += "</tr>";
+
+      return rowHTML;
+    }
+
+    var chordlistHTML = getChordListHeader();
+
     var scaleNoteLengths = Fretboard.Scale.ScaleNotes.map((sn) => sn.ScaleChords.length);
     // Math.max doesn't allow an array, so using the spread operator (...) to convert it to the individual values
     var numberOfRows = Math.max(...scaleNoteLengths);
 
-    var chordlistHTML = "<table id='scale-chords'>";
-    chordlistHTML += "<tr class='table-header'>";
-    for (var j = 0; j < 7; j++) {
-      chordlistHTML += "<th class='table-header-cell'>" + (j + 1) + "</th>";
-    }
-
     for (var i = 0; i < numberOfRows; i++) {
-      chordlistHTML += "<tr>";
-
-      Fretboard.Scale.ScaleNotes.forEach((sn) => {
-        if (sn.ScaleChords[i]) {
-          chordlistHTML +=
-            "<td class='scale-chord ' id='" +
-            sn.ScaleChords[i].ID +
-            "' onclick='FretboardController.HighlightChord(this.id)'>" +
-            sn.ScaleChords[i].Display +
-            "</td>";
-        } else {
-          chordlistHTML += "<td class='scale-chord'></td>";
-        }
-      });
-      chordlistHTML += "</tr>";
+      chordlistHTML += getChordListRowHTML(i);
     }
-    chordlistHTML += "</table>";
 
-    document.getElementById("scale-chord-list").innerHTML = chordlistHTML;
+    chordlistHTML += getChordListFooter();
+
+    this.HTMLUtils.SetInnerHtmlById("scale-chord-list", chordlistHTML);
   },
+
+  /**
+   * Populate dropdown for tunings.
+   */
   PopulateTunings: function () {
     var tunings = Object.keys(MusicDefs.Tunings).map((t) => MusicDefs.Tunings[t]);
     this.HTMLUtils.PopulateDropdown(this._tuningSelectID, tunings, "Key", "Name");
   },
+
+  /**
+   * Populate dropdown for scale root notes.
+   */
   PopulateScales: function () {
     var notes = MusicDefs.AllNotes.map((f) => {
       if (f.includes("#")) {
@@ -266,13 +532,20 @@ export var FretHTMLManager = {
         return f;
       }
     });
-    //this.HTMLUtils.PopulateDropdown(this._scaleSelectID, MusicDefs.AllNotes);
     this.HTMLUtils.PopulateDropdown(this._scaleSelectID, notes);
   },
+
+  /**
+   * Populate dropdown for scale types.
+   */
   PopulateScaleTypes: function () {
     var scaleTypes = Object.keys(MusicDefs.ScaleTypes).map((t) => MusicDefs.ScaleTypes[t]);
     this.HTMLUtils.PopulateDropdown(this._scaleTypeSelectID, scaleTypes, "Key", "Name");
   },
+
+  /**
+   * Populate dropdown for capo fret.
+   */
   PopulateCapo: function () {
     var capoFrets = [];
 
@@ -283,10 +556,19 @@ export var FretHTMLManager = {
     this.HTMLUtils.PopulateDropdown(this._capoSelectID, capoFrets);
     document.getElementById(this._capoSelectID).selectedIndex = 2;
   },
+
+  /**
+   * Sets content of pop-up listing enharmonic scales
+   * @param {string[]} scales List of enharmonic scales.
+   */
   SetEnharmonicScales(scales) {
     var text = scales.join("<br>");
-    document.getElementById("enharmonic-scales").innerHTML = text;
+    this.HTMLUtils.SetInnerHtmlById("enharmonic-scales", text);
   },
+
+  /**
+   * Initialize HTML by populating all dropdowns.
+   */
   Init: function () {
     this.PopulateCapo();
     this.PopulateTunings();

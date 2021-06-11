@@ -135,6 +135,7 @@ export var FretboardController = {
     FretHTMLManager.SetChordDetailChart(null);
     this.SetHighlights();
     FretHTMLManager.RedrawChordList();
+    this.HighlightedChord = null;
   },
   Init: function () {
     this.fretboard = Fretboard;
