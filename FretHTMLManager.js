@@ -1,3 +1,5 @@
+/** @module FretboardExplorer/FretHTMLManager */
+
 import * as MusicDefs from "./MusicDefs.js";
 import * as Util from "./Util.js";
 import { Fretboard } from "./Fretboard.js";
@@ -39,7 +41,7 @@ export var FretHTMLManager = {
     /**
      * Get all DOM elements with the class 'fret'
      *
-     * @returns
+     * @returns {HTMLCollection}
      */
     GetFrets: function () {
       return document.getElementsByClassName("fret");
@@ -518,7 +520,7 @@ export var FretHTMLManager = {
    */
   PopulateTunings: function () {
     var tunings = Object.keys(MusicDefs.Tunings).map((t) => MusicDefs.Tunings[t]);
-    this.HTMLUtils.PopulateDropdown(this._tuningSelectID, tunings, "Key", "Name");
+    this.HTMLUtils.PopulateDropdown(this._tuningSelectID, tunings, "Id", "Name");
   },
 
   /**
@@ -527,12 +529,12 @@ export var FretHTMLManager = {
   PopulateScales: function () {
     var notes = MusicDefs.AllNotes.map((f) => {
       if (f.includes("#")) {
-        return f + " / " + Util.GetArrayOffset(MusicDefs.NoteLetters, f.replace("#", ""), 1) + "b";
+        return { id: f, value: f + " / " + Util.GetArrayOffset(MusicDefs.NoteLetters, f.replace("#", ""), 1) + "b" };
       } else {
-        return f;
+        return { id: f, value: f };
       }
     });
-    this.HTMLUtils.PopulateDropdown(this._scaleSelectID, notes);
+    this.HTMLUtils.PopulateDropdown(this._scaleSelectID, notes, "id", "value");
   },
 
   /**
@@ -540,7 +542,7 @@ export var FretHTMLManager = {
    */
   PopulateScaleTypes: function () {
     var scaleTypes = Object.keys(MusicDefs.ScaleTypes).map((t) => MusicDefs.ScaleTypes[t]);
-    this.HTMLUtils.PopulateDropdown(this._scaleTypeSelectID, scaleTypes, "Key", "Name");
+    this.HTMLUtils.PopulateDropdown(this._scaleTypeSelectID, scaleTypes, "Id", "Name");
   },
 
   /**

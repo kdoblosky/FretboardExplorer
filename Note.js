@@ -2,17 +2,33 @@ import * as Util from "./Util.js";
 import * as MusicDefs from "./MusicDefs.js";
 
 /** @module FretboardExplorer/Note */
+
+/**
+ * Create a new Note.
+ *
+ * @constructor
+ * @param {string} name Root note. Always use sharps here.
+ */
 export function Note(name) {
-  //console.log('name: ' + name)
   var that = this;
 
   /**
-	 @property {Name}	{Name} - Name of the note
-	*/
+   * @property {string} Name Name of the note
+   */
   this.Name = name;
 
+  /**
+   * @property {int} Index Index of the note, within MusicDefs.AllNotes
+   */
   this.Index = MusicDefs.AllNotes.indexOf(name);
 
+  /**
+   * Give current note, returns the name of a note that is offset
+   * by the specified number of half-steps.
+   *
+   * @param {int} offset Number of half-steps to offset.
+   * @returns {string} Name of offset note.
+   */
   this.GetNoteOffset = function (offset) {
     return Util.GetArrayOffset(MusicDefs.AllNotes, that.Name, offset);
   };
@@ -36,8 +52,16 @@ export function Note(name) {
     }
   };
 
+  /**
+   * @property {string} Alternate Alternate name of the note. I.e. for a note with the name
+   * F#, returns Gb.
+   */
   this.AltName = GetAltName();
 
+  /**
+   * Gets the next note in the chromatic scale.
+   * @returns {Note} The next chromatic note
+   */
   this.NextNote = function () {
     if (that.Name === "None") {
       return new Note("None");
@@ -47,6 +71,11 @@ export function Note(name) {
     }
   };
 
+  /**
+   * Gets the previous note in the chromatic scale.
+   *
+   * @returns {Note} The previous chromatic note
+   */
   this.PrevNote = function () {
     if (that.Name === "None") {
       return new Note("None");
@@ -68,8 +97,16 @@ export function Note(name) {
     }
   };
 
+  /**
+   * @property {string} DisplayName Full display name of note
+   */
   this.DisplayName = GetDisplayName();
 
+  /**
+   *
+   * @param {Note} note
+   * @returns {int} Number of half-steps between this Note, and provided Note.
+   */
   this.GetInterval = function (note) {
     var interval;
     var rootIndex = MusicDefs.AllNotes.indexOf(this.Name);

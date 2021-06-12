@@ -60,13 +60,13 @@ export var FretboardController = {
     this.SetTuningByName(tuningName);
   },
   SetTuningByName: function (tuningName) {
-    this.SetTuning(MusicDefs.Tunings.find((f) => f.Key === tuningName));
+    this.SetTuning(MusicDefs.Tunings.find((f) => f.Id === tuningName));
   },
   SetScaleFromForm: function () {
     var scaleName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._scaleSelectID);
     var scaleTypeName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._scaleTypeSelectID);
 
-    var scaleType = MusicDefs.ScaleTypes.find((s) => s.Key === scaleTypeName);
+    var scaleType = MusicDefs.ScaleTypes.find((s) => s.Id === scaleTypeName);
     var scale = new Scale(scaleName, scaleType);
     this.SetScale(scale);
   },
