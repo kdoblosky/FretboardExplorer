@@ -1,7 +1,6 @@
-import * as Util from "./Util.js";
 import * as MusicDefs from "./MusicDefs.js";
 import { Scale } from "./Scale.js";
-import { FretHTMLManager } from "./FretHTMLManager.js";
+import * as FretHTMLManager from "./FretHTMLManager.js";
 import { Fretboard } from "./Fretboard.js";
 import { FretAttribute } from "./FretAttribute.js";
 import { CssUtils } from "./CssUtils.js";

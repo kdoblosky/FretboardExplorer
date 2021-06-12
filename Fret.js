@@ -1,5 +1,13 @@
 import { Scale } from "./Scale.js";
 
+/** @module FretboardExplorer/Fret */
+
+/**
+ * @constructor
+ * @param {Note} note Note of the Fret
+ * @param {int} stringNumber Number of the string
+ * @param {int} fretNumber Number of the fret
+ */
 export function Fret(note, stringNumber, fretNumber) {
   //console.log(note);
   this.Note = note;

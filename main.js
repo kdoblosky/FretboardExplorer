@@ -5,7 +5,7 @@
 // import * as Scale from './Scale.js';
 // import {Fret} from './Fret.js';
 // import * as FretboardString from './FretboardString.js';
-import { FretHTMLManager } from "./FretHTMLManager.js";
+import * as FretHTMLManager from "./FretHTMLManager.js";
 // import {Fretboard} from './Fretboard.js';
 import { FretboardController } from "./FretboardController.js";
 
