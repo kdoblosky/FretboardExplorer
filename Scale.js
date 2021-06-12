@@ -29,12 +29,9 @@ export function Scale(root, scaleType) {
   function ScaleChord(scaleNote, chordType) {
     this.Chord = new Chord(scaleNote.Note, chordType);
     this.Position = scaleNote.Position;
-    this.NashvilleNumber = MusicDefs.NashvilleNumbers.find((f) => f.Position === scaleNote.Position);
     this.ScaleRootNote = scaleNote;
 
     this.DisplayName = function () {
-      // var number = this.NashvilleNumber.Position.toString() + this.Chord.ChordType.NashvilleSuffix;
-      // return number + " - " + this.Chord.Display(that.UseAltNames);
       return this.Chord.Display(that.UseAltNames);
     };
 
