@@ -12,3 +12,4 @@ coverage/*
 .parcel-cache/*
 out/*
 fretboard-dev.css
+index.html

@@ -74,11 +74,6 @@ export var Tunings = [
     Strings: ["E", "B", "E", "G#", "B", "E"],
   },
   {
-    Id: "MandolinStandard",
-    Name: "Mandolin - Standard",
-    Strings: ["G", "D", "A", "E"],
-  },
-  {
     Id: "BanjoStandard",
     Name: "Banjo - Standard",
     Strings: [{ Note: "G", Start: 6 }, "D", "G", "B", "D"],
@@ -87,6 +82,51 @@ export var Tunings = [
     Id: "BanjoGMinor",
     Name: "Banjo - GMinor",
     Strings: [{ Note: "G", Start: 6 }, "D", "G", "Bb", "D"],
+  },
+  {
+    Id: "BanjoGVariant",
+    Name: "Banjo - G Variant",
+    Strings: [{ Note: "G", Start: 6 }, "D", "G", "A", "D"],
+  },
+  {
+    Id: "BanjoOpenD",
+    Name: "Banjo - Open D",
+    Strings: [{ Note: "A", Start: 6 }, "D", "F#", "A", "D"],
+  },
+  {
+    Id: "BanjoDoubleC",
+    Name: "Banjo - Double C",
+    Strings: [{ Note: "G", Start: 6 }, "C", "G", "C", "D"],
+  },
+  {
+    Id: "BanjoGModal",
+    Name: "Banjo - G Modal",
+    Strings: [{ Note: "G", Start: 6 }, "D", "G", "C", "D"],
+  },
+  {
+    Id: "BanjoDModal",
+    Name: "Banjo - D Modal",
+    Strings: [{ Note: "A", Start: 6 }, "D", "G", "A", "D"],
+  },
+  {
+    Id: "MandolinStandard",
+    Name: "Mandolin - Standard",
+    Strings: ["G", "D", "A", "E"],
+  },
+  {
+    Id: "MandolinOpenG",
+    Name: "Mandolin - Open G",
+    Strings: ["G", "D", "G", "B"],
+  },
+  {
+    Id: "MandolinSawmill",
+    Name: "Mandolin - Sawmill",
+    Strings: ["G", "D", "G", "D"],
+  },
+  {
+    Id: "MandolinGDAD",
+    Name: "Mandolin - GDAD",
+    Strings: ["G", "D", "A", "D"],
   },
 ];
 
