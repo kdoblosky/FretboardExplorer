@@ -21,6 +21,18 @@ td:first-child {
   font-weight: bolder;
 }
 
+.select-header {
+  display: flex;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.select-header > select {
+  margin-right: 1em;
+}
+.select-header > div {
+  margin-right: 3em;
+}
 td {
   width: 100px;
 }
@@ -196,6 +208,12 @@ td {
 .scale-chord-highlight {
   background: #666666;
   color: #eeeeee;
+}
+
+.note-none {
+  background: rgba(201, 76, 76, 0.144);
+  border-left: none !important;
+  border-right: 0px !important;
 }
 
 .help-icon {

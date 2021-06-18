@@ -12,6 +12,9 @@ import * as MusicDefs from "./MusicDefs.js";
 export function Note(name) {
   var that = this;
 
+  if (name.includes("b")) {
+    name = Util.GetArrayOffset(MusicDefs.NoteLetters, name.replace("b", ""), -1) + "#";
+  }
   /**
    * @property {string} Name Name of the note
    */

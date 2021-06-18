@@ -245,6 +245,30 @@ export var ChordTypes = [
     Intervals: [Intervals.MajorThird, Intervals.MinorSixth],
   },
   {
+    Name: "Add2",
+    NumberOfNotes: 4,
+    Display: "add2",
+    Intervals: [Intervals.WholeStep, Intervals.MajorThird, Intervals.PerfectFifth],
+  },
+  {
+    Name: "MinorAdd2",
+    NumberOfNotes: 4,
+    Display: "madd2",
+    Intervals: [Intervals.WholeStep, Intervals.MinorThird, Intervals.PerfectFifth],
+  },
+  {
+    Name: "Add4",
+    NumberOfNotes: 4,
+    Display: "add4",
+    Intervals: [Intervals.MajorThird, Intervals.PerfectFourth, Intervals.PerfectFifth],
+  },
+  {
+    Name: "MinorAdd4",
+    NumberOfNotes: 4,
+    Display: "madd4",
+    Intervals: [Intervals.MinorThird, Intervals.PerfectFourth, Intervals.PerfectFifth],
+  },
+  {
     Name: "Major6th",
     NumberOfNotes: 4,
     Display: "6",

@@ -1,9 +1,11 @@
+/* eslint-disable no-import-assign */
 import * as MusicDefs from "./MusicDefs.js";
 import { Scale } from "./Scale.js";
 import * as FretHTMLManager from "./FretHTMLManager.js";
 import { Fretboard } from "./Fretboard.js";
 import { FretAttribute } from "./FretAttribute.js";
 import { CssUtils } from "./CssUtils.js";
+import * as QueryStringUtils from "./QueryStringUtils.js";
 
 export var FretboardController = {
   fretboard: Fretboard,
@@ -42,7 +44,9 @@ export var FretboardController = {
   },
 
   SetCapo: function () {
-    this.fretboard.CapoFret = parseInt(FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._capoSelectID), 10);
+    var capoFret = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._capoSelectID);
+    this.fretboard.CapoFret = parseInt(capoFret, 10);
+    QueryStringUtils.capo = capoFret;
     this.ReDraw();
   },
 
@@ -56,6 +60,7 @@ export var FretboardController = {
   },
   SetTuningFromForm: function () {
     var tuningName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._tuningSelectID);
+    QueryStringUtils.tuning = tuningName;
     this.SetTuningByName(tuningName);
   },
   SetTuningByName: function (tuningName) {
@@ -65,6 +70,8 @@ export var FretboardController = {
     var scaleName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._scaleSelectID);
     var scaleTypeName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._scaleTypeSelectID);
 
+    QueryStringUtils.scale = scaleName;
+    QueryStringUtils.scaleType = scaleTypeName;
     var scaleType = MusicDefs.ScaleTypes.find((s) => s.Id === scaleTypeName);
     var scale = new Scale(scaleName, scaleType);
     this.SetScale(scale);
@@ -135,6 +142,7 @@ export var FretboardController = {
     this.SetHighlights();
     FretHTMLManager.RedrawChordList();
     this.HighlightedChord = null;
+    QueryStringUtils.SetQueryString();
   },
   Init: function () {
     this.fretboard = Fretboard;

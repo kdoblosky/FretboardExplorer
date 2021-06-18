@@ -1,77 +1,104 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-    <head>
-		<script type=module src="main.js"></script>
-        <link rel="stylesheet" href="fretboard.css">
-  
-        <title>Fretboard Explorer</title>
-    </head>
+  <head>
+    <script type="module" src="main.js"></script>
+    <link rel="stylesheet" href="fretboard.css" />
 
-    <body>
-        <h1>Fretboard Explorer</h1>
-		
-		<label for="tuning-select">Tuning:</label>
-		<select name="tuning" id="tuning-select" onchange="FretboardController.SetTuningFromForm();">
-		</select>
-		
-		<label for="scale-select">Scale:</label>
-		<select name="scale" id="scale-select" onchange="FretboardController.SetScaleFromForm();">
-		</select>
-		
-		<label for="scale-type-select">Scale Type:</label>
-		<select name="scaletype" id="scale-type-select" onchange="FretboardController.SetScaleFromForm();">
-		</select>
+    <title>Fretboard Explorer</title>
+  </head>
 
-		<div class='tooltip'>
-			Enharmonic scales
-			<span class='tooltip-text' id ='enharmonic-scales'></span>
-		</div>
+  <body>
+    <h1>Fretboard Explorer</h1>
 
-		<label for="capo-select">Capo Fret:</label>
-		<select name="caposelect" id="capo-select" onchange="FretboardController.SetCapo();">
-		</select>
-		<div class='tooltip help-icon'>
-			&nbsp;?&nbsp;
-			<span class='tooltip-text' id='capo-help-tooltip'>
-				Fret to put capo on. This will be treated as the open string value. Negative values are equivalent to tuning down. String column will show value without capo.
-			</span>
-		</div>
-		
-		<p>
-		<input type="checkbox" id="show-non-scale-notes" name="ShowNonScaleNotes" value="false" onchange="FretboardController.SetShowNonScaleNotes();">
-		<label for="show-non-scale-notes">Show non-scale notes</label>
+    <div class="select-header">
+      <select name="tuning" id="tuning-select" onchange="FretboardController.SetTuningFromForm();"></select>
 
-		<input type="checkbox" id="highlight-scale-notes" name="HighlightScaleNotes" value="true" onchange="FretboardController.SetHighlightScaleNotes();" checked> 
-		<label for="hightlight-scale-notes">Highlight scale notes</label>
+      <select name="scale" id="scale-select" onchange="FretboardController.SetScaleFromForm();"></select>
 
-		<input type="checkbox" id="highlight-chord-notes" name="HighlightChordNotes" value="true" onchange="FretboardController.SetHighlightChordNotes();" checked> 
-		<label for="hightlight-chord-notes">Highlight chord notes</label>
-		<input type="checkbox" id="show-scale-position-instead-of-note" name="ShowScalePositions" value="true" onchange="FretboardController.SetShowScalePositions();">
-		<label for="show-scale-position-instead-of-note">Show scale position instead of notes</label>
-		</p>
-		
-		<div id='fretboard-table'></div>
-		<p>
-		<div id='selected-scale-chord-container'>
-			<div id='scale-chart-container'></div>
-			<div id='chord-detail-chart' class='flex-container'></div>
-		</div>
-		<p>
-		<div id='scale-chord-list-container'> 
-			<div class='flex-container'>
-				<h3>Chords in scale:</h3>
-				<div id='scale-chord-list'></div> 
-			</div>
-			
-		</div>
+      <select name="scaletype" id="scale-type-select" onchange="FretboardController.SetScaleFromForm();"></select>
 
-		<p>
-		<!-- <div id='seventh-chord-list-container'>
+      <select name="caposelect" id="capo-select" onchange="FretboardController.SetCapo();"></select>
+
+      <select
+        id="enharmonic-scales"
+        onchange="document.getElementById('enharmonic-scales').selectedIndex = 0;"
+      ></select>
+    </div>
+    <div class="select-header">
+      <div>
+        <div class="vert-checkbox">
+          <input
+            type="checkbox"
+            id="show-non-scale-notes"
+            name="ShowNonScaleNotes"
+            value="false"
+            onchange="FretboardController.SetShowNonScaleNotes();"
+          />
+          <label for="show-non-scale-notes">Show non-scale notes</label>
+        </div>
+        <div class="vert-checkbox">
+          <input
+            type="checkbox"
+            id="show-scale-position-instead-of-note"
+            name="ShowScalePositions"
+            value="true"
+            onchange="FretboardController.SetShowScalePositions();"
+          />
+          <label for="show-scale-position-instead-of-note">Show scale position</label>
+        </div>
+      </div>
+      <div>
+        <div class="vert-checkbox">
+          <input
+            type="checkbox"
+            id="highlight-scale-notes"
+            name="HighlightScaleNotes"
+            value="true"
+            onchange="FretboardController.SetHighlightScaleNotes();"
+            checked
+          />
+          <label for="hightlight-scale-notes">Highlight scale notes</label>
+        </div>
+        <div class="vert-checkbox">
+          <input
+            type="checkbox"
+            id="highlight-chord-notes"
+            name="HighlightChordNotes"
+            value="true"
+            onchange="FretboardController.SetHighlightChordNotes();"
+            checked
+          />
+          <label for="hightlight-chord-notes">Highlight chord notes</label>
+        </div>
+      </div>
+    </div>
+
+    <div id="fretboard-table"></div>
+    <p></p>
+    <div id="selected-scale-chord-container">
+      <div id="scale-chart-container"></div>
+      <div id="chord-detail-chart" class="flex-container"></div>
+    </div>
+    <p></p>
+    <div id="scale-chord-list-container">
+      <div class="flex-container">
+        <h3>Chords in scale:</h3>
+        <div id="scale-chord-list"></div>
+      </div>
+    </div>
+
+    <p>
+      <!-- <div id='seventh-chord-list-container'>
 			<div class='flex-container'>
 				<h3>7th chords in scale:</h3>
 				<div id='seventh-scale-chord-list'></div>
 			</div>
 		</div> -->
-		<p>Created by Kevin McCalix. See the code <a href="https://github.com/kdoblosky/FretboardExplorer">on GitHub</a>. Licensed under a GPLv3 license.</p>
-    </body>
+    </p>
+
+    <p>
+      Created by Kevin McCalix. See the code <a href="https://github.com/kdoblosky/FretboardExplorer">on GitHub</a>.
+      Licensed under a GPLv3 license.
+    </p>
+  </body>
 </html>

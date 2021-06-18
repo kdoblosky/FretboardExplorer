@@ -3,6 +3,15 @@ import * as MusicDefs from "./MusicDefs.js";
 import { Note } from "./Note.js";
 import { Chord } from "./Chord.js";
 
+/** @module FretboardExplorer/Scale */
+
+/**
+ * Create a new Scale
+ *
+ * @constructor
+ * @param {string} root Root note of the scale
+ * @param {ScaleType} scaleType The {@link module:FretboardExplorer/MusicDefs.ScaleTypes|ScaleType} for this scale.
+ */
 export function Scale(root, scaleType) {
   var that = this;
   this.NoteLetters = new Array();
@@ -14,33 +23,77 @@ export function Scale(root, scaleType) {
   this.Name = root + " " + scaleType.Name;
   this.UseAltNames = false;
 
+  /**
+   * Special case of a Note contained within a specific Scale.
+   * @constructor
+   * @param {string} note Note for this ScaleNote
+   * @param {ScaleType} scaleType The {@link module:FretboardExplorer/MusicDefs.ScaleTypes|ScaleType} for this ScaleNote
+   * @param {string[]} scaleLetters An array of all notes in the associated Scale
+   */
   function ScaleNote(note, scaleType, scaleLetters) {
+    /** The {@link module:FretboardExplorer/Note.Note|Note} for this ScaleNote */
     this.Note = new Note(note);
+
+    /** The The {@link module:FretboardExplorer/MusicDefs.ScaleTypes|ScaleType} for this ScaleNote */
     this.ScaleType = scaleType;
+
+    /** The position of this note within its Scale */
     this.Position = scaleLetters.indexOf(note) + 1;
+
+    /** The next {@link module:FretboardExplorer/Note.Note|Note} within the Scale */
     this.NextNote = Util.GetArrayOffset(scaleLetters, note, 1);
+
+    /** The previous {@link module:FretboardExplorer/Note.Note|Note} within the Scale */
     this.PrevNote = Util.GetArrayOffset(scaleLetters, note, -1);
+
+    /** The {@link module:FretboardExplorer/Note.Note|Note} a third (either minor or major) above this note, within the Scale */
     this.Third = Util.GetArrayOffset(scaleLetters, note, 2);
+
+    /** The {@link module:FretboardExplorer/Note.Note|Note} a fifth above this note, within the Scale */
     this.Fifth = Util.GetArrayOffset(scaleLetters, note, 4);
+
+    /** The {@link module:FretboardExplorer/Note.Note|Note} a seventh above this note, within the Scale */
     this.Seventh = Util.GetArrayOffset(scaleLetters, note, 6);
+
+    /** An array of {@link module:FretboardExplorer/Scale.Scale~ScaleChord|ScaleChords} or chords rooted in the current note, contained entirely within the scale. */
     this.ScaleChords = [];
   }
 
+  /**
+   * Special case of a Chord within a Scale
+   * @constructor
+   * @param {ScaleNote} scaleNote
+   * @param {ChordType} chordType
+   */
   function ScaleChord(scaleNote, chordType) {
+    /** Chord */
     this.Chord = new Chord(scaleNote.Note, chordType);
+
+    /** Position of the root note of this chord within the scale */
     this.Position = scaleNote.Position;
+
+    /** Root note of this chord */
     this.ScaleRootNote = scaleNote;
 
+    /**
+     * Get DisplayName of this chord
+     * @returns {string}
+     */
     this.DisplayName = function () {
       return this.Chord.Display(that.UseAltNames);
     };
 
+    /** Name to display for this chord */
     this.Display = this.DisplayName();
 
+    /** ID of this chord */
     this.GetID = function () {
       return (this.Chord.Root.Name + "-" + this.Chord.ChordType.Name).toLocaleLowerCase().replace(/ /g, "-");
     };
 
+    /** ID of this chord
+     * @returns {string}
+     */
     this.ID = this.GetID();
   }
 
@@ -65,6 +118,11 @@ export function Scale(root, scaleType) {
     this.UseAltNames = false;
   }
 
+  /**
+   * Get all ScaleChords starting from the startingNote
+   * @param {ScaleNote} startingNote
+   * @returns {ScaleChord[]}
+   */
   function getAllScaleChords(startingNote) {
     // Loop through all chord types, trying intervals
     // If all notes are contained within the scale, then it's a valid chord
@@ -84,6 +142,12 @@ export function Scale(root, scaleType) {
     return chords;
   }
 
+  /**
+   * Get the ChordType of a triad or 7th chord starting from the specified ScaleNote
+   * @param {ScaleNote} startingNote
+   * @param {int} numberOfNotes
+   * @returns
+   */
   function getScaleChordType(startingNote, numberOfNotes) {
     var intervals = [];
     intervals.push(startingNote.Note.GetInterval(new Note(startingNote.Third)));
@@ -103,10 +167,6 @@ export function Scale(root, scaleType) {
   }
 
   this.ScaleNotes.forEach((sn) => {
-    // var chordType = getScaleChordType(sn, 3);
-    // if (chordType) {
-    //   this.ScaleChords.push(new ScaleChord(sn, chordType));
-    // }
     sn.ScaleChords = getAllScaleChords(sn);
     this.ScaleChords = this.ScaleChords.concat(sn.ScaleChords);
 
@@ -116,6 +176,10 @@ export function Scale(root, scaleType) {
     }
   });
 
+  /**
+   * Gets a list of enharmonic scales (scales with the same notes as the current scale, but a different root note)
+   * @returns {string[]}
+   */
   this.GetEnharmonicScales = function () {
     var scaleRelationshipIndex = MusicDefs.ScaleRelationships.indexOf(this.ScaleType.Name);
 

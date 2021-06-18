@@ -39,6 +39,18 @@ export var HTMLUtils = {
     });
   },
 
+  ClearOptionsFromDropdown: function (dropdownID) {
+    var selectElement = document.getElementById(dropdownID);
+    var last = selectElement.options.length - 1;
+    for (var i = last; i >= 0; i--) {
+      selectElement.remove(i);
+    }
+  },
+
+  SelectOptionFromDropdown: function (dropdownID, value) {
+    document.getElementById(dropdownID).value = value;
+  },
+
   /**
    * Get all DOM elements with the class 'fret'
    *
@@ -47,6 +59,13 @@ export var HTMLUtils = {
   GetFrets: function () {
     return document.getElementsByClassName("fret");
   },
+
+  // AddNoteNoneAttributeToFrets: function() {
+  //   var frets = this.Fretboard.GetAllFrets().filter((f) => f.Note.Name == "None");
+  //   frets.forEach((f) => {
+  //     f.classList.add(CssUtils.HighlightClasses.noteNone)
+  //   });
+  // },
 
   /**
    * Remove specified CSS class from all frets
@@ -553,10 +572,10 @@ export var PopulateCapo = function () {
   var capoFrets = [];
 
   for (var i = -2; i < 10; i++) {
-    capoFrets.push(i);
+    capoFrets.push({ display: "Capo " + i.toString(), value: i });
   }
 
-  this.HTMLUtils.PopulateDropdown(this._capoSelectID, capoFrets);
+  this.HTMLUtils.PopulateDropdown(this._capoSelectID, capoFrets, "value", "display");
   document.getElementById(this._capoSelectID).selectedIndex = 2;
 };
 
@@ -565,8 +584,9 @@ export var PopulateCapo = function () {
  * @param {string[]} scales List of enharmonic scales.
  */
 export var SetEnharmonicScales = function (scales) {
-  var text = scales.join("<br>");
-  this.HTMLUtils.SetInnerHtmlById("enharmonic-scales", text);
+  //var text = scales.join("<br>");
+  this.HTMLUtils.ClearOptionsFromDropdown("enharmonic-scales");
+  this.HTMLUtils.PopulateDropdown("enharmonic-scales", ["Enharmonic Scales"].concat(scales));
 };
 
 /**

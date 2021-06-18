@@ -73,6 +73,9 @@ export var CssUtils = {
         cssClass = this.ChordHighlightClasses.chordSeventh;
         //"chord-seventh";
         break;
+      case FretAttribute.NoteNone:
+        cssClass = this.HighlightClasses.noteNone;
+        break;
       default:
         cssClass = "";
     }
@@ -107,5 +110,6 @@ export var CssUtils = {
     scaleSeventh: "scale-seventh",
     nonScale: "non-scale",
     nonScaleHide: "non-scale-hide",
+    noteNone: "note-none",
   },
 };

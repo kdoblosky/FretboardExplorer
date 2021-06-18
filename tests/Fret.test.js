@@ -22,10 +22,6 @@ describe("Test Fret", () => {
     expect(fret.FretNumber).toBe(5);
   });
 
-  test("Test Fret.HasNote", () => {
-    expect(fret.HasNote).toBe(true);
-  });
-
   test("Test ScalePosition", () => {
     var scale = new Scale("C#", MusicDefs.GetScaleType("Major"));
     expect(fret.ScalePosition(scale)).toBe(2);
@@ -33,13 +29,6 @@ describe("Test Fret", () => {
 
   test("Test NoteName", () => {
     expect(fret.NoteName()).toBe("D#");
-  });
-});
-
-describe("Test Fret with no note", () => {
-  var fret = new Fret(null, 5, 3);
-  test("Test creating fret without a note", () => {
-    expect(fret.HasNote).toBe(false);
   });
 });
 

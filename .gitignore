@@ -11,3 +11,4 @@ node_modules
 coverage/*
 .parcel-cache/*
 out/*
+fretboard-dev.css

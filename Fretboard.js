@@ -44,6 +44,13 @@ export var Fretboard = {
         f.FretAttributes.push(FretAttribute.NonScale);
       });
 
+    // Add NoteNone Attribute
+    frets
+      .filter((f) => f.Note.Name == "None")
+      .forEach((f) => {
+        f.FretAttributes.push(FretAttribute.NoteNone);
+      });
+
     var scaleAttributePositions = [
       FretAttribute.ScaleRoot,
       FretAttribute.ScaleSecond,
@@ -102,16 +109,9 @@ export var Fretboard = {
       // This is to accomodate instruments like the 5-string banjo,
       // where the 5th string doesn't start until the 6th fret.
 
-      // var adjustedNote = this.Tuning.Strings[i].Note;
-      // if (capoFret != 0) {
-      //   var n = Util.GetArrayOffset(MusicDefs.AllNote, adjustedNote.Name, capoFret);
-      //   adjustedNote = new Note(n);
-      // }
       if (
         Object.prototype.hasOwnProperty.call(this.Tuning.Strings[i], "Note") &&
         Object.prototype.hasOwnProperty.call(this.Tuning.Strings[i], "Start")
-        //this.Tuning.Strings[i].hasOwnProperty("Note") &&
-        //this.Tuning.Strings[i].hasOwnProperty("Start")
       ) {
         this.FretboardMap.push(
           new FretboardString(
