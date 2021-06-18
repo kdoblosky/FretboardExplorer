@@ -46,7 +46,7 @@ export var FretboardController = {
   SetCapo: function () {
     var capoFret = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._capoSelectID);
     this.fretboard.CapoFret = parseInt(capoFret, 10);
-    QueryStringUtils.capo = capoFret;
+    QueryStringUtils.SetCapo(capoFret);
     this.ReDraw();
   },
 
@@ -60,7 +60,7 @@ export var FretboardController = {
   },
   SetTuningFromForm: function () {
     var tuningName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._tuningSelectID);
-    QueryStringUtils.tuning = tuningName;
+    QueryStringUtils.SetTuning(tuningName);
     this.SetTuningByName(tuningName);
   },
   SetTuningByName: function (tuningName) {
@@ -70,8 +70,8 @@ export var FretboardController = {
     var scaleName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._scaleSelectID);
     var scaleTypeName = FretHTMLManager.HTMLUtils.GetSelectValue(FretHTMLManager._scaleTypeSelectID);
 
-    QueryStringUtils.scale = scaleName;
-    QueryStringUtils.scaleType = scaleTypeName;
+    QueryStringUtils.SetScale(scaleName);
+    QueryStringUtils.SetScaleType(scaleTypeName);
     var scaleType = MusicDefs.ScaleTypes.find((s) => s.Id === scaleTypeName);
     var scale = new Scale(scaleName, scaleType);
     this.SetScale(scale);

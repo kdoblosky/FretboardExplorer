@@ -5,6 +5,22 @@ export var scale = urlParams.get("scale");
 export var scaleType = urlParams.get("scale-type");
 export var capo = urlParams.get("capo");
 
+export function SetTuning(Tuning) {
+  tuning = Tuning;
+}
+
+export function SetScale(Scale) {
+  scale = Scale;
+}
+
+export function SetScaleType(ScaleType) {
+  scaleType = ScaleType;
+}
+
+export function SetCapo(Capo) {
+  capo = Capo;
+}
+
 export function SetQueryString() {
   if (history.pushState) {
     var newurl =
